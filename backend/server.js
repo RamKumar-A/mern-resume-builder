@@ -46,7 +46,17 @@ app.use('/api/resume', resumeRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(
+  '/uploads',
+  express.static(path.join(__dirname, 'uploads'), {
+    setHeaders: (res, path) => {
+      res.set(
+        'Access-Control-Allow-Origin',
+        'https://mern-resume-builder.vercel.app/'
+      );
+    },
+  })
+);
 
 // Start Server
 const PORT = process.env.PORT;
