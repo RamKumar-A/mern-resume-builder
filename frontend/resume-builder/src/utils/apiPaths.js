@@ -1,4 +1,5 @@
-export const BASE_URL = 'http://localhost:8000';
+// export const BASE_URL = 'http://localhost:8000';
+export const BASE_URL = 'https://mern-resume-builder-backend.onrender.com';
 
 export const API_PATH = {
   AUTH: {
