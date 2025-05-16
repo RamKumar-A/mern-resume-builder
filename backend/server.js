@@ -52,7 +52,7 @@ app.use(
     setHeaders: (res, path) => {
       res.set(
         'Access-Control-Allow-Origin',
-        'https://mern-resume-builder.vercel.app/'
+        'https://mern-resume-builder.vercel.app'
       );
     },
   })
