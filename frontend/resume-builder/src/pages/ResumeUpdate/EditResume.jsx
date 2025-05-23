@@ -809,7 +809,7 @@ function EditResume() {
               templateId={resumeData?.template?.theme || ''}
               resumeData={resumeData}
               colorPalatte={resumeData?.template?.colorPalatte}
-              containerWidth={window.innerWidth < 768 && 800}
+              containerWidth={800}
             />
           </Grid>
         </Grid>
