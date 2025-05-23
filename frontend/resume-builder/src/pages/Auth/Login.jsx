@@ -5,10 +5,12 @@ import Input from '../../components/Inputs/Input';
 import { UserContext } from '../../context/UserContext';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATH } from '../../utils/apiPaths';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { grey, red } from '@mui/material/colors';
 
 function Login({ setCurrentPage }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('ram@example.com');
+  const [password, setPassword] = useState('test1234');
   const [error, setError] = useState(null);
 
   const { updateUser } = useContext(UserContext);
@@ -52,19 +54,15 @@ function Login({ setCurrentPage }) {
   }
 
   return (
-    <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center">
-      <h3 className="text-lg font-semibold text-black">Welcome Back</h3>
-      <p className="text-xs text-slate-700 mt-[5px] mb-6">
-        Please enter your details to log in
-      </p>
-
-      <form onSubmit={handleLogin}>
+    <Box width="100%" p="0.25rem">
+      <Box component="form" onSubmit={handleLogin}>
         <Input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           label="Email Address"
           placeholder="john@example.com"
           type="text"
+          id="email"
         />
 
         <Input
@@ -73,24 +71,56 @@ function Login({ setCurrentPage }) {
           label="Password"
           placeholder="Min 8 Characters"
           type="password"
+          id="password"
         />
 
-        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
-
-        <button className="btn-primary" type="submit">
-          LOGIN
-        </button>
-        <p className="text-[13px] text-slate-800 mt-3">
-          Don&apos;t have an account?{' '}
-          <button
-            className="font-medium text-primary underline cursor-pointer"
-            onClick={() => setCurrentPage('signup')}
+        {error && (
+          <Typography
+            component="p"
+            color={red[500]}
+            pb="0.625rem"
+            fontSize="0.75rem"
           >
-            SignUp
-          </button>
-        </p>
-      </form>
-    </div>
+            {error}
+          </Typography>
+        )}
+
+        <Button
+          variant="contained"
+          sx={{ bgcolor: '#000' }}
+          type="submit"
+          fullWidth
+        >
+          LOGIN
+        </Button>
+        <Stack direction="row" alignItems="center" justifyContent="center">
+          <Typography
+            component="div"
+            fontSize="13px"
+            gutterBottom
+            color={grey[800]}
+            pt={3}
+            textTransform="center"
+          >
+            Don&apos;t have an account?{' '}
+            <Typography
+              fontSize="13px"
+              component="span"
+              color="#932be7"
+              width="fit-content"
+              textTransform="capitalize"
+              sx={{
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }}
+              onClick={() => setCurrentPage('signup')}
+            >
+              SignUp
+            </Typography>
+          </Typography>
+        </Stack>
+      </Box>
+    </Box>
   );
 }
 

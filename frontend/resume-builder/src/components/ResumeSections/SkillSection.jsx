@@ -1,8 +1,10 @@
+import { Grid, Stack, Typography } from '@mui/material';
 import Progress from '../Progress';
+import { blueGrey } from '@mui/material/colors';
 
 function SkillSection({ skills, accentColor, bgColor }) {
   return (
-    <div className="grid grid-cols-2 gap-x-5 gap-y-1 mb-5">
+    <Grid container columnSpacing="1.25rem" rowSpacing="0.5rem" mb="1.25rem">
       {skills?.map((skill, index) => (
         <SkillInfo
           skill={skill.name}
@@ -12,22 +14,26 @@ function SkillSection({ skills, accentColor, bgColor }) {
           bgColor={bgColor}
         />
       ))}
-    </div>
+    </Grid>
   );
 }
 
 function SkillInfo({ skill, progress, accentColor, bgColor }) {
   return (
-    <div className="flex items-center justify-between">
-      <p className={`text-[12px] font-semibold text-gray-900`}>{skill}</p>
-      {progress > 0 && (
-        <Progress
-          progress={(progress / 100) * 5}
-          color={accentColor}
-          bgColor={bgColor}
-        />
-      )}
-    </div>
+    <Grid size={6}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography fontSize="12px" fontWeight="600" color={blueGrey[900]}>
+          {skill}
+        </Typography>
+        {progress > 0 && (
+          <Progress
+            progress={(progress / 100) * 5}
+            color={accentColor}
+            bgColor={bgColor}
+          />
+        )}
+      </Stack>
+    </Grid>
   );
 }
 

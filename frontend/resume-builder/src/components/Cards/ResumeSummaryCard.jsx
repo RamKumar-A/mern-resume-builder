@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getLightColorFromImage } from '../../utils/helper';
+import { Box, Grid, Typography } from '@mui/material';
+import { blueGrey, purple } from '@mui/material/colors';
 
 function ResumeSummaryCard({ imgUrl, title, lastUpdated, onSelect }) {
   const [bgColor, setBgColor] = useState('#ffffff');
@@ -11,31 +13,61 @@ function ResumeSummaryCard({ imgUrl, title, lastUpdated, onSelect }) {
     }
   }, [imgUrl]);
   return (
-    <div
-      className="h-[300px] flex flex-col items-center justify-between bg-white rounded-lg border border-gray-200 hover:border-purple-300 overflow-hidden cursor-pointer"
-      style={{ backgroundColor: bgColor }}
+    <Grid
+      size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+      sx={{
+        cursor: 'pointer',
+        '&:hover': {
+          borderColor: purple[300],
+        },
+      }}
+      height="300px"
+      bgcolor={bgColor}
+      overflow="hidden"
+      borderRadius="0.5rem"
+      border="1px solid #d1d5dcba "
       onClick={onSelect}
     >
-      <div className="p-4">
+      <Box p="1rem">
         {imgUrl ? (
-          <img
-            src={imgUrl}
-            alt=""
-            className="w-full h-[200px] rounded object-contain"
-          />
+          <Box height="200px" width="100%">
+            <img
+              src={imgUrl}
+              alt=""
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '0.25rem',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
         ) : (
           <div className=""></div>
         )}
-      </div>
-      <div className="w-full bg-white px-4 py-3">
-        <h5 className="text-sm font-medium truncate overflow-hidden whitespace-nowrap">
+      </Box>
+      <Box width="100%" bgcolor="#fff" px="1rem" py="0.75rem">
+        <Typography
+          component="h5"
+          fontSize="0.875rem"
+          fontWeight={500}
+          textOverflow="ellipsis"
+          whiteSpace="nowrap"
+          overflow="hidden"
+        >
           {title}
-        </h5>
-        <p className="text-xs font-medium text-gray-500 mt-0.5">
+        </Typography>
+        <Typography
+          component="p"
+          fontSize="12px"
+          color={blueGrey[500]}
+          fontWeight={500}
+          marginTop="0.125rem"
+        >
           Last Updated: {lastUpdated}
-        </p>
-      </div>
-    </div>
+        </Typography>
+      </Box>
+    </Grid>
   );
 }
 

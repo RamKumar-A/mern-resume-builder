@@ -1,16 +1,32 @@
+import { Stack, Typography } from '@mui/material';
+
 function ActionLink({ icon, link, bgColor }) {
   return (
-    <div className="flex items-center gap-3">
-      <div
-        className="w-[25px] h-[25px] flex items-center justify-center rounded-full"
-        style={{ backgroundColor: bgColor }}
+    <Stack direction="row" alignItems="center" gap="0.75rem">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        className="rounded-full"
+        width="25px"
+        height="25px"
+        bgcolor={bgColor}
       >
         {icon}
-      </div>
-      <p className="text-[13px] font-medium underline cursor-pointer break-all">
+      </Stack>
+      <Typography
+        component="p"
+        fontSize="13px"
+        fontWeight="500"
+        sx={{
+          textDecoration: 'underline',
+          cursor: 'pointer',
+          wordBreak: 'break-all',
+        }}
+      >
         {link}
-      </p>
-    </div>
+      </Typography>
+    </Stack>
   );
 }
 

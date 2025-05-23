@@ -8,6 +8,7 @@ import Tabs from '../../components/Tabs';
 import { LuCircleCheckBig } from 'react-icons/lu';
 import TemplateCard from '../../components/Cards/TemplateCard';
 import RenderResume from '../../components/ResumeTemplates/RenderResume';
+import { Box, Button, Grid, Stack } from '@mui/material';
 
 const TAB_DATA = [{ label: 'Templates' }, { label: 'Color Palattes' }];
 
@@ -55,75 +56,93 @@ function ThemeSelector({
   }, []);
 
   return (
-    <div className="container mx-auto px-2 md:px-0">
-      <div className="flex items-center justify-between mb-5 mt-2">
+    <Box mx="auto">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        mt="0.5rem"
+        mb="1.25rem"
+        flexWrap="wrap"
+      >
         <Tabs tabs={TAB_DATA} activeTab={tabValue} setActiveTab={setTabValue} />
 
-        <button
-          className="btn-small-light"
+        <Button
+          sx={{
+            color: '#6e11b0',
+            bgcolor: '#9810fa21',
+            textTransform: 'capitalize',
+          }}
+          size="small"
           onClick={() => handleThemeSelection()}
+          startIcon={<LuCircleCheckBig className="" />}
         >
-          <LuCircleCheckBig className="text-[16px]" />
           Done
-        </button>
-      </div>
-      <div className="grid grid-cols-12 gap-5">
-        <div className="col-span-12 md:col-span-5 bg-white">
-          <div className="grid grid-cols-2 gap-5 max-h-[80vh] overflow-auto custom-scrollbar md:pr-5">
+        </Button>
+      </Stack>
+      <Grid container spacing="1.25rem">
+        <Grid size={{ xs: 12, md: 5 }}>
+          <Grid
+            container
+            spacing="1.25rem"
+            mx="auto"
+            columns={{ xs: 4, sm: 8 }}
+            overflow="auto"
+          >
             {tabValue === 'Templates' &&
               resumeTemplates.map((template, index) => (
-                <TemplateCard
-                  key={`templates_${index}`}
-                  thumbnailImg={template.thumbnailImg}
-                  isSelected={selectedTemplate?.index === index}
-                  onSelect={() =>
-                    setSelectedTemplate({ theme: template.id, index })
-                  }
-                />
+                <Grid size={{ xs: 4, sm: 4 }} key={`templates_${index}`}>
+                  <TemplateCard
+                    thumbnailImg={template.thumbnailImg}
+                    isSelected={selectedTemplate?.index === index}
+                    onSelect={() =>
+                      setSelectedTemplate({ theme: template.id, index })
+                    }
+                  />
+                </Grid>
               ))}
             {tabValue === 'Color Palattes' &&
               themeColorPalatte.themeOne.map((colors, index) => (
-                <ColorPalatte
-                  key={`palatte_${index}`}
-                  colors={colors}
-                  isSelected={selectedColorPalatte?.index === index}
-                  onSelect={() => setSelectedColorPalatte({ colors, index })}
-                />
+                <Grid size={{ xs: 2 }} key={`palatte_${index}`}>
+                  <ColorPalatte
+                    colors={colors}
+                    isSelected={selectedColorPalatte?.index === index}
+                    onSelect={() => setSelectedColorPalatte({ colors, index })}
+                  />
+                </Grid>
               ))}
-          </div>
-        </div>
-        <div
-          className="col-span-12 md:col-span-7 bg-white -mt-3"
-          ref={resumeRef}
-        >
+          </Grid>
+        </Grid>
+        <Grid size={{ xs: 12, md: 7 }} ref={resumeRef}>
           <RenderResume
             templateId={selectedTemplate?.theme || ''}
             resumeData={resumeData || DUMMY_RESUME_DATA}
             containerWidth={baseWidth}
             colorPalatte={selectedColorPalatte?.colors || []}
           />
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 
 function ColorPalatte({ colors, isSelected, onSelect }) {
   return (
-    <div
-      className={`h-28 bg-purple-50 flex rounded-lg overflow-hidden border-2 ${
+    <Stack
+      direction="row"
+      className={`h-28 bg-purple-50 rounded-lg overflow-hidden border-2 ${
         isSelected ? 'border-purple-500' : 'border-none'
       }`}
     >
       {colors.map((color, index) => (
         <div
           key={`color_${index}`}
-          style={{ backgroundColor: colors[index] }}
+          style={{ backgroundColor: color }}
           onClick={onSelect}
-          className="flex-1"
+          className=" flex-1"
         />
       ))}
-    </div>
+    </Stack>
   );
 }
 

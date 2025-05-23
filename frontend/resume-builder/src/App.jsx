@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Home/Dashboard';
 import EditResume from './pages/ResumeUpdate/EditResume';
 import { UserProvider } from './context/UserContext';
+import AppLayout from './components/layouts/AppLayout';
 
 function App() {
   return (
@@ -13,9 +14,11 @@ function App() {
       <div>
         <Router>
           <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/resume/:resumeId" element={<EditResume />} />
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/resume/:resumeId" element={<EditResume />} />
+            </Route>
           </Routes>
         </Router>
       </div>

@@ -1,3 +1,5 @@
+import { Avatar, Badge, Box, Stack } from '@mui/material';
+import { grey, purple, red } from '@mui/material/colors';
 import { useRef, useState } from 'react';
 import { LuTrash, LuUpload, LuUser } from 'react-icons/lu';
 
@@ -32,43 +34,95 @@ function ProfilePhotoSelector({ image, setImage, preview, setPreview }) {
   }
 
   return (
-    <div className="flex justify-center mb-6">
+    <Box
+      sx={{
+        p: 0,
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {/* <Box className="bg-yellow-500 p-2"> */}
       <input
         type="file"
         accept="image/*"
         ref={inputRef}
         onChange={handleImageChange}
-        className="hidden"
+        style={{
+          display: 'none',
+        }}
       />
-
+      {/* </Box> */}
       {!image ? (
-        <div className="w-20 h-20 flex items-center justify-center bg-purple-50 rounded-full relative cursor-pointer">
-          <LuUser className="text-xl text-purple-500" />
-          <button
-            className="w-8 h-8 flex items-center justify-center bg-linear-to-r from-purple-500/85 to-purple-700 text-white rounded-full absolute -bottom-1 -right-1 cursor-pointer "
-            onClick={onChooseFile}
-            type="button"
-          >
-            <LuUpload className="" />
-          </button>
-        </div>
-      ) : (
-        <div className="relative">
-          <img
-            src={preview || previewUrl}
-            alt="profile photo"
-            className="w-20 h-20 rounded-full object-cover"
+        <Badge
+          overlap="circular"
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          badgeContent={
+            <Avatar
+              sx={{
+                width: 24,
+                height: 24,
+                color: '#fff',
+                position: 'absolute',
+                bgcolor: purple[600],
+              }}
+              onClick={onChooseFile}
+            >
+              {' '}
+              <LuUpload
+                style={{
+                  padding: '0.25rem',
+                  width: 'fit-content',
+                }}
+              />
+            </Avatar>
+          }
+        >
+          <Avatar
+            sx={{
+              width: 50,
+              height: 50,
+              bgcolor: purple[800],
+            }}
           />
-          <button
-            className="w-8 h-8 flex items-center justify-center bg-red-500 text-white rounded-full absolute -bottom-1 -right-1 cursor-pointer"
-            type="button"
-            onClick={handleRemoveImage}
+        </Badge>
+      ) : (
+        <Box position="relative">
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            badgeContent={
+              <Avatar
+                sx={{
+                  width: 24,
+                  height: 24,
+                  bgcolor: red[500],
+                  color: grey[50],
+                }}
+                onClick={handleRemoveImage}
+              >
+                {' '}
+                <LuTrash
+                  style={{
+                    padding: '0.25rem',
+                    width: 'fit-content',
+                  }}
+                />
+              </Avatar>
+            }
           >
-            <LuTrash />
-          </button>
-        </div>
+            <Avatar
+              sx={{
+                width: 50,
+                height: 50,
+              }}
+              src={preview || previewUrl}
+            />
+          </Badge>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
 

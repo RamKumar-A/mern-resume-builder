@@ -7,6 +7,8 @@ import axiosInstance from '../../utils/axiosInstance';
 import { API_PATH } from '../../utils/apiPaths';
 import { UserContext } from '../../context/UserContext';
 import uploadImage from '../../utils/uploadImage';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { grey, red } from '@mui/material/colors';
 
 function SignUp({ setCurrentPage }) {
   const { updateUser } = useContext(UserContext);
@@ -69,57 +71,101 @@ function SignUp({ setCurrentPage }) {
     }
   }
   return (
-    <div className="w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center">
-      <h3 className="text-lg font-semibold text-black">Create an Account</h3>
-      <p className="text-xs text-slate-700 mt-[5px] mb-6">
-        Join us today by entering your details below.
-      </p>
+    <Box width="100%" p="0.25rem">
+      {/* <Box py="0.25rem" pb="0.5rem">
+        <Typography component="h3" fontSize={'1.25rem'} fontWeight={500}>
+          Create an Account
+        </Typography>
+        <Typography
+          component="p"
+          fontSize="0.75rem"
+          gutterBottom
+          color={grey[700]}
+        >
+          Join us today by entering your details below.
+        </Typography>
+      </Box> */}
 
-      <form onSubmit={handleSignUp}>
-        <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+      <Box component="form" onSubmit={handleSignUp}>
+        <Box>
+          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+        </Box>
 
-        <div className="grid grid-cols-1 gap-2">
-          <Input
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            label="Full Name"
-            placeholder="John Doe"
-            type="text"
-          />
+        {/* <div className=""> */}
+        <Input
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          label="Full Name"
+          placeholder="John Doe"
+          type="text"
+        />
 
-          <Input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            label="Email Address"
-            placeholder="john@example.com"
-            type="text"
-          />
+        <Input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          label="Email Address"
+          placeholder="john@example.com"
+          type="text"
+          id="email"
+        />
 
-          <Input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            label="Password"
-            placeholder="Min 8 Characters"
-            type="password"
-          />
-        </div>
-        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
-
-        <button className="btn-primary" type="submit">
-          SIGN UP
-        </button>
-
-        <p className="text-[13px] text-slate-800 mt-3">
-          Already have an account?{' '}
-          <button
-            className="font-medium text-primary underline cursor-pointer"
-            onClick={() => setCurrentPage('login')}
+        <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          label="Password"
+          placeholder="Min 8 Characters"
+          type="password"
+          id="password"
+        />
+        {/* </div> */}
+        {error && (
+          <Typography
+            component="p"
+            color={red[500]}
+            pb="0.625rem"
+            fontSize="0.75rem"
           >
-            Login
-          </button>
-        </p>
-      </form>
-    </div>
+            {error}
+          </Typography>
+        )}
+
+        <Button
+          variant="contained"
+          sx={{ bgcolor: '#000' }}
+          type="submit"
+          fullWidth
+        >
+          SIGN UP
+        </Button>
+
+        <Stack direction="row" alignItems="center" justifyContent="center">
+          <Typography
+            component="div"
+            fontSize="13px"
+            gutterBottom
+            color={grey[800]}
+            pt={3}
+            textTransform="center"
+          >
+            Already have an account?{' '}
+            <Typography
+              fontSize="13px"
+              component="span"
+              color="#932be7"
+              width="fit-content"
+              textTransform="capitalize"
+              sx={{
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }}
+              onClick={() => setCurrentPage('login')}
+            >
+              Login
+            </Typography>
+          </Typography>
+        </Stack>
+      </Box>
+    </Box>
   );
 }
 

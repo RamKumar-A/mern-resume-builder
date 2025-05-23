@@ -1,6 +1,15 @@
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import Input from '../../../components/Inputs/Input';
 import RatingInput from '../../../components/ResumeSections/RatingInput';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { blueGrey, grey, purple, red } from '@mui/material/colors';
 
 function SkillsInfoForm({
   skillsInfo,
@@ -9,50 +18,98 @@ function SkillsInfoForm({
   removeArrayItem,
 }) {
   return (
-    <div className="px-5 pt-5">
-      <h2 className="text-lg font-semibold text-gray-900">Skills</h2>
-      <div className="mt-4 flex flex-col gap-4 mb-3">
+    <Box px="1.25rem" pt="1.25rem">
+      <Typography
+        fontSize={{ xs: '1rem', sm: '1.125rem' }}
+        component="h2"
+        fontWeight={500}
+        color={blueGrey[900]}
+      >
+        Skills
+      </Typography>
+      <Stack mt="1rem" gap="1rem" mb="0.75rem">
         {skillsInfo.map((skill, index) => (
-          <div
+          <Box
             key={index}
-            className="border border-gray-200/80 p-4 rounded-lg relative"
+            border={`1px solid ${blueGrey[100]}`}
+            p="1rem"
+            borderRadius="0.5rem"
+            position="relative"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                label="Skill Name"
-                placeholder="Javascript"
-                type="text"
-                value={skill.name || ''}
-                onChange={(e) => updateArrayItem(index, 'name', e.target.value)}
-              />
-              <div className="flex flex-col">
-                <label htmlFor="" className="text-[13px] text-slate-800 mb-1">
-                  Proficiency ({skill.progress / 20 || 0}/5)
-                </label>
-                <div className="mt-5">
-                  <RatingInput
-                    value={skill.progress || 0}
-                    total={5}
-                    onChange={(newValue) =>
-                      updateArrayItem(index, 'progress', newValue)
-                    }
-                  />
-                </div>
-              </div>
-            </div>
+            <Grid container columnSpacing={2} rowSpacing={1}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`skill_name_${index}`}
+                  label="Skill Name"
+                  placeholder="Javascript"
+                  type="text"
+                  value={skill.name || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'name', e.target.value)
+                  }
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Stack>
+                  <label
+                    htmlFor=""
+                    style={{
+                      fontSize: '13px',
+                      color: grey[600],
+                      fontWeight: '500',
+                    }}
+                  >
+                    Proficiency ({skill.progress / 20 || 0}/5)
+                  </label>
+                  <Box py="0.75rem" mb="1rem" mt="1rem">
+                    <RatingInput
+                      value={skill.progress || 0}
+                      total={5}
+                      onChange={(newValue) =>
+                        updateArrayItem(index, 'progress', newValue)
+                      }
+                    />
+                  </Box>
+                </Stack>
+              </Grid>
+            </Grid>
             {skillsInfo.length > 1 && (
-              <button
+              <IconButton
                 type="button"
-                className="absolute top-3 right-3 text-sm text-red-600 hover:underline cursor-pointer"
+                sx={{
+                  position: 'absolute',
+                  top: '0.75rem',
+                  right: '0.75rem',
+                  fontSize: '14px',
+                  color: red[500],
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                }}
                 onClick={() => removeArrayItem(index)}
               >
                 <LuTrash2 />
-              </button>
+              </IconButton>
             )}
-          </div>
+          </Box>
         ))}
-        <button
-          className="self-start flex items-center gap-2 px-4 py-2 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer"
+        <Button
+          type="button"
+          sx={{
+            bgcolor: '#f3e8ff',
+            color: '#6e11b0 ',
+            '&:hover': {
+              bgcolor: purple[100],
+            },
+            display: 'flex',
+            alignSelf: 'self-start',
+            alignItems: 'center',
+            fontSize: '0.875rem',
+            textTransform: 'capitalize',
+          }}
+          size="small"
+          color="#6e11b0 "
+          startIcon={<LuPlus />}
           onClick={() =>
             addArrayItem({
               name: '',
@@ -60,10 +117,10 @@ function SkillsInfoForm({
             })
           }
         >
-          <LuPlus /> Add Skill
-        </button>
-      </div>
-    </div>
+          Add Skill
+        </Button>
+      </Stack>
+    </Box>
   );
 }
 

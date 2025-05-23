@@ -1,3 +1,12 @@
+import {
+  Backdrop,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { blueGrey, purple } from '@mui/material/colors';
 import { HiXMark } from 'react-icons/hi2';
 
 function Modal({
@@ -13,41 +22,92 @@ function Modal({
 }) {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-center w-full h-full backdrop-brightness-50">
-      <div
-        className={`relative flex flex-col bg-white shadow-lg rounded-lg overflow-hidden lg:mx-10 lg:px-10`}
+    <Box
+      position="fixed"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="100%"
+      height="100%"
+      sx={{
+        inset: '0',
+        zIndex: '50',
+        backdropFilter: 'brightness(50%)',
+      }}
+    >
+      <Stack
+        position="relative"
+        bgcolor="#fff"
+        borderRadius="0.5rem"
+        overflow="hidden"
+        px={{ xs: '0.25rem', md: '1rem', xl: '1.5rem' }}
+        mx={{ xs: '0.25rem', md: '1rem', xl: '1.5rem' }}
+        height="90vh"
       >
         {/* Modal Header */}
         {!hideHeader && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 ">
-            <h3 className="md:text-lg font-medium text-gray-900">{title}</h3>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            p="1rem"
+            borderBottom={`1px solid ${blueGrey[200]}`}
+          >
+            <Typography
+              fontSize={{ xs: '0.8rem', sm: '1.125rem' }}
+              fontWeight="500"
+              color={blueGrey[900]}
+              // className="line-clamp-1"
+            >
+              {title}
+            </Typography>
             {showActionBtn && (
-              <button
-                className="btn-small-light mr-12 "
+              <Button
                 onClick={() => onActionClick()}
+                size="small"
+                variant="outlined"
+                endIcon={actionBtnIcon}
+                sx={{
+                  mr: '1.5rem',
+                  textTransform: 'capitalize',
+                  color: purple[500],
+                  bgcolor: purple[50],
+                }}
               >
                 {actionBtnText}
-                {actionBtnIcon}
-              </button>
+              </Button>
             )}
-          </div>
+          </Stack>
         )}
 
-        <button
-          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center absolute top-3.5 right-3.5 cursor-pointer"
+        <IconButton
+          sx={{
+            position: 'absolute',
+            top: '0.9rem',
+            right: '0.5rem',
+            color: blueGrey[400],
+            bgcolor: 'transparent',
+
+            '&:hover': {
+              bgcolor: blueGrey[200],
+              color: blueGrey[900],
+            },
+          }}
+          size="small"
+          className=""
           onClick={onClose}
           type="button"
         >
-          <HiXMark size={20} />
-        </button>
+          <HiXMark />
+        </IconButton>
 
         {/* Modal Body (Scrollable) */}
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
+        <Box flex="1" overflow="auto" height="fit-content">
           {children}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Stack>
+    </Box>
   );
 }
 

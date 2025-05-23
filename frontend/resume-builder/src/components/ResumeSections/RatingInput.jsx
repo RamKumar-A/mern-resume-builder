@@ -1,3 +1,5 @@
+import { Box, Stack } from '@mui/material';
+
 function RatingInput({
   value = 0,
   total = 5,
@@ -15,19 +17,24 @@ function RatingInput({
   }
 
   return (
-    <div className="flex gap-3 cursor-pointer">
+    <Stack direction="row" gap="0.75rem" sx={{ cursor: 'pointer' }}>
       {[...Array(total)].map((_, index) => {
         const isActive = index < displayValue;
         return (
-          <div
+          <Box
+            width="1rem"
+            height="1rem"
+            borderRadius="0.25rem"
+            sx={{
+              transition: 'all',
+            }}
+            bgcolor={isActive ? color : bgColor}
             key={index}
             onClick={() => handleClick(index)}
-            className="w-4 h-4 rounded transition-all"
-            style={{ backgroundColor: isActive ? color : bgColor }}
-          ></div>
+          ></Box>
         );
       })}
-    </div>
+    </Stack>
   );
 }
 

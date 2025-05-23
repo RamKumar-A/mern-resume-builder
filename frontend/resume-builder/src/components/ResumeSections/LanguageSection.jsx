@@ -1,8 +1,10 @@
+import { Box, Stack, Typography } from '@mui/material';
 import Progress from '../Progress';
+import { blueGrey } from '@mui/material/colors';
 
 function LanguageSection({ bgColor, accentColor, languages }) {
   return (
-    <div className="">
+    <Box className="">
       {languages.map((language, index) => (
         <LanguageInfo
           key={`language_${index}`}
@@ -12,14 +14,16 @@ function LanguageSection({ bgColor, accentColor, languages }) {
           bgColor={bgColor}
         />
       ))}
-    </div>
+    </Box>
   );
 }
 
 function LanguageInfo({ language, progress, accentColor, bgColor }) {
   return (
-    <div className="flex items-center justify-between">
-      <p className={`text-[12px] font-semibold text-gray-900`}>{language}</p>
+    <Stack direction="row" alignItems="center" justifyContent="space-between">
+      <Typography fontSize="12px" fontWeight="600" color={blueGrey[700]}>
+        {language}
+      </Typography>
       {progress > 0 && (
         <Progress
           progress={(progress / 100) * 5}
@@ -27,7 +31,7 @@ function LanguageInfo({ language, progress, accentColor, bgColor }) {
           color={accentColor}
         />
       )}
-    </div>
+    </Stack>
   );
 }
 

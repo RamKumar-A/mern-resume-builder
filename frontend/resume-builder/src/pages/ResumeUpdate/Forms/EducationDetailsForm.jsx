@@ -1,5 +1,14 @@
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import Input from '../../../components/Inputs/Input';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { blueGrey, purple, red } from '@mui/material/colors';
 
 function EducationDetailsForm({
   educationInfo,
@@ -8,67 +17,108 @@ function EducationDetailsForm({
   removeArrayItem,
 }) {
   return (
-    <div className="px-5 pt-5">
-      <h2 className="text-lg font-semibold text-gray-900">Education</h2>
-      <div className="mt-4 flex flex-col gap-4 mb-3">
+    <Box px="1.25rem" pt="1.25rem">
+      <Typography
+        fontSize={{ xs: '1rem', sm: '1.125rem' }}
+        component="h2"
+        fontWeight={500}
+        color={blueGrey[900]}
+      >
+        Education
+      </Typography>
+      <Stack mt="1rem" gap="1rem" mb="0.75rem">
         {educationInfo?.map((education, index) => (
-          <div
+          <Box
             key={index}
-            className="border border-gray-200/80 p-4 rounded-lg relative"
+            border={`1px solid ${blueGrey[100]}`}
+            p="1rem"
+            borderRadius="0.5rem"
+            position="relative"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                label="Degree"
-                placeholder="B.Sc in Computer Science"
-                type="text"
-                value={education.degree || ''}
-                onChange={(e) =>
-                  updateArrayItem(index, 'degree', e.target.value)
-                }
-              />
-
-              <Input
-                label="Institution"
-                placeholder="XYZ University"
-                type="text"
-                value={education.institution || ''}
-                onChange={(e) =>
-                  updateArrayItem(index, 'institution', e.target.value)
-                }
-              />
-
-              <Input
-                label="Start Date"
-                type="month"
-                value={education.startDate || ''}
-                onChange={(e) =>
-                  updateArrayItem(index, 'startDate', e.target.value)
-                }
-              />
-
-              <Input
-                label="End Date"
-                type="month"
-                value={education.endDate || ''}
-                onChange={(e) =>
-                  updateArrayItem(index, 'endDate', e.target.value)
-                }
-              />
-            </div>
+            <Grid container gap="1rem" columnSpacing={2} rowSpacing={1}>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`degree_${index}`}
+                  label="Degree"
+                  placeholder="B.Sc in Computer Science"
+                  type="text"
+                  value={education.degree || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'degree', e.target.value)
+                  }
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`institution_${index}`}
+                  label="Institution"
+                  placeholder="XYZ University"
+                  type="text"
+                  value={education.institution || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'institution', e.target.value)
+                  }
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`startDate_${index}`}
+                  label="Start Date"
+                  type="month"
+                  value={education.startDate || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'startDate', e.target.value)
+                  }
+                />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`endDate_${index}`}
+                  label="End Date"
+                  type="month"
+                  value={education.endDate || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'endDate', e.target.value)
+                  }
+                />
+              </Grid>
+            </Grid>
             {educationInfo?.length > 1 && (
-              <button
+              <IconButton
                 type="button"
-                className="absolute top-3 right-3 text-sm text-red-600 hover:underline cursor-pointer"
                 onClick={() => removeArrayItem(index)}
+                sx={{
+                  position: 'absolute',
+                  top: '0.75rem',
+                  right: '0.75rem',
+                  fontSize: '14px',
+                  color: red[500],
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                }}
               >
                 <LuTrash2 />
-              </button>
+              </IconButton>
             )}
-          </div>
+          </Box>
         ))}
-        <button
+        <Button
           type="button"
-          className="self-start flex items-center gap-2 px-4 py-2 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer"
+          sx={{
+            bgcolor: '#f3e8ff',
+            color: '#6e11b0 ',
+            '&:hover': {
+              bgcolor: purple[100],
+            },
+            display: 'flex',
+            alignSelf: 'self-start',
+            alignItems: 'center',
+            fontSize: '0.875rem',
+            textTransform: 'capitalize',
+          }}
+          size="small"
+          color="#6e11b0 "
           onClick={() =>
             addArrayItem({
               degree: '',
@@ -77,11 +127,12 @@ function EducationDetailsForm({
               endDate: '',
             })
           }
+          startIcon={<LuPlus />}
         >
-          <LuPlus /> Add Education
-        </button>
-      </div>
-    </div>
+          Add Education
+        </Button>
+      </Stack>
+    </Box>
   );
 }
 

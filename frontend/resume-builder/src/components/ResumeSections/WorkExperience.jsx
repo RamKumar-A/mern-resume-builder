@@ -1,3 +1,6 @@
+import { Box, Stack, Typography } from '@mui/material';
+import { blueGrey } from '@mui/material/colors';
+
 function WorkExperience({
   company,
   role,
@@ -6,25 +9,47 @@ function WorkExperience({
   description,
 }) {
   return (
-    <div className="mb-5">
-      <div className="flex items-start justify-between">
-        <div>
-          <h3 className="text-[15px] font-semibold text-gray-900 ">
+    <Box mb="1.25rem">
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Box>
+          <Typography
+            component="h3"
+            fontSize="15px"
+            fontWeight="600"
+            color={blueGrey[900]}
+          >
             {company}
-          </h3>
-          <p className="text-[15px] text-gray-700 font-medium">{role}</p>
-        </div>
-        <p
-          className="text-xs font-bold italic"
-          style={{ color: durationColor }}
+          </Typography>
+          <Typography
+            component="p"
+            fontSize="15px"
+            fontWeight="500"
+            color={blueGrey[700]}
+          >
+            {role}
+          </Typography>
+        </Box>
+        <Typography
+          component="p"
+          fontSize="0.75rem"
+          fontWeight="700"
+          fontStyle="italic"
+          color={durationColor}
         >
           {duration}
-        </p>
-      </div>
-      <p className="text-sm text-gray-600 font-medium italic mt-[0.2cqw]">
+        </Typography>
+      </Stack>
+      <Typography
+        component="p"
+        fontSize="0.875rem"
+        fontWeight="500"
+        fontStyle="italic"
+        mt="0.2cqw"
+        color={blueGrey[600]}
+      >
         {description}
-      </p>
-    </div>
+      </Typography>
+    </Box>
   );
 }
 

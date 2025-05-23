@@ -16,18 +16,31 @@ import WorkExperience from '../ResumeSections/WorkExperience';
 import ProjectInfo from '../ResumeSections/ProjectInfo';
 import SkillSection from '../ResumeSections/SkillSection';
 import CertificationsInfo from '../ResumeSections/CertificationsInfo';
+import { Box, Grid, Stack, Typography } from '@mui/material';
 
 const DEFAULT_THEME = ['#EBFDFF', '#A1F4FD', '#CEFAFE', '#00B8DB', '#4A5565'];
 
 function Title({ text, color }) {
   return (
-    <div className="relative w-fit mb-2.5">
-      <span
-        className="absolute bottom-0 left-0 w-full h-2"
-        style={{ backgroundColor: color }}
-      ></span>
-      <h2 className={`relative text-sm font-bold`}>{text}</h2>
-    </div>
+    <Box position="relative" width="fit-content" mb="0.625rem">
+      <Box
+        width="100%"
+        height="0.5rem"
+        position="absolute"
+        bottom="0"
+        left="0"
+        component="span"
+        bgcolor={color}
+      ></Box>
+      <Typography
+        component="h2"
+        fontSize="0.875rem"
+        fontWeight="700"
+        position="relative"
+      >
+        {text}
+      </Typography>
+    </Box>
   );
 }
 
@@ -45,50 +58,71 @@ function TemplateOne({ resumeData, colorPalatte, containerWidth }) {
     setScale(containerWidth / baseWidth);
   }, [containerWidth]);
   return (
-    <div
+    <Box
       ref={resumeRef}
-      className="p-3 bg-white"
-      style={{
+      p="0.75rem"
+      bgcolor="#fff"
+      width={containerWidth > 0 ? `${baseWidth}px` : 'auto'}
+      height="auto"
+      sx={{
         transform: containerWidth > 0 ? `scale(${scale})` : 'none',
         transformOrigin: 'top left',
-        width: containerWidth > 0 ? `${baseWidth}px` : 'auto',
-        height: 'auto',
       }}
     >
-      <div className="grid grid-cols-12 gap-8">
-        <div
-          className="col-span-4 py-10"
-          style={{ backgroundColor: themeColors[0] }}
-        >
-          <div className="flex flex-col items-center px-2">
-            <div
-              className="w-[100px] h-[100px] max-w-[110px] max-h-[110px] rounded-full flex items-center justify-center"
-              style={{ backgroundColor: themeColors[1] }}
+      <Grid container spacing="2rem">
+        <Grid size={4} p="2.5rem" bgcolor={themeColors[0]}>
+          <Stack px="0.5rem" alignItems="center">
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              width="100px"
+              height="100px"
+              maxWidth="110px"
+              maxHeight="110px"
+              className="rounded-full"
+              bgcolor={themeColors[1]}
             >
               {resumeData?.profileInfo.profilePreviewUrl ? (
                 <img
                   src={resumeData.profileInfo.profilePreviewUrl}
-                  className="w-[90px] h-[90px] rounded-full object-cover"
+                  style={{
+                    width: '90px',
+                    height: '90px',
+                    objectFit: 'cover',
+                  }}
+                  className="rounded-full"
                 />
               ) : (
-                <div
-                  className="w-[90px] h-[90px] flex items-center justify-center text-5xl rounded-full"
-                  style={{ color: themeColors[4] }}
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  width="90px"
+                  height="90px"
+                  fontSize="3rem"
+                  className="rounded-full"
+                  color={themeColors[4]}
                 >
                   <LuUser />
-                </div>
+                </Stack>
               )}
-            </div>
+            </Stack>
 
-            <h2 className="text-xl font-bold mt-3">
+            <Typography
+              fontSize="1.25rem"
+              fontWeight="700"
+              mt="0.75rem"
+              component="h2"
+            >
               {resumeData.profileInfo.fullName}
-            </h2>
-            <p className="text-sm text-center">
+            </Typography>
+            <Typography fontSize="0.875rem" textAlign="center" component="p">
               {resumeData.profileInfo.designation}
-            </p>
-          </div>
-          <div className="my-6 mx-6">
-            <div className="flex flex-col gap-4">
+            </Typography>
+          </Stack>
+          <Box my="1.5rem">
+            <Stack gap="1rem">
               <ContactInfo
                 icon={<LuMapPinHouse />}
                 iconBG={themeColors[2]}
@@ -126,9 +160,9 @@ function TemplateOne({ resumeData, colorPalatte, containerWidth }) {
                 iconBG={themeColors[2]}
                 value={resumeData.contactInfo.website}
               />
-            </div>
+            </Stack>
 
-            <div className="mt-5">
+            <Box mt="1.25rem">
               <Title text="Education" color={themeColors[1]} />
               {resumeData.education.map((data, index) => (
                 <EducationInfo
@@ -140,26 +174,26 @@ function TemplateOne({ resumeData, colorPalatte, containerWidth }) {
                   )} - ${formatYearMonth(data.endDate)}`}
                 />
               ))}
-            </div>
+            </Box>
 
-            <div className="mt-5">
+            <Box mt="1.25rem">
               <Title text="Languages" color={themeColors[1]} />
               <LanguageSection
                 languages={resumeData.languages}
                 accentColor={themeColors[3]}
                 bgColor={themeColors[2]}
               />
-            </div>
-          </div>
-        </div>
-        <div className="col-span-8 pt-10 mr-10 pb-5">
-          <div>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid size={8} pt="2.5rem" pb="1.25rem">
+          <Box>
             <Title text="Professional Summary" color={themeColors[1]} />
-            <p className="text-sm font-medium">
+            <Typography fontSize="0.875rem" fontWeight="500" component="p">
               {resumeData.profileInfo.summary}
-            </p>
-          </div>
-          <div className="mt-4">
+            </Typography>
+          </Box>
+          <Box mt="1rem">
             <Title text="Work Experience" color={themeColors[1]} />
 
             {resumeData.workExperience.map((data, index) => (
@@ -174,9 +208,9 @@ function TemplateOne({ resumeData, colorPalatte, containerWidth }) {
                 description={data.description}
               />
             ))}
-          </div>
+          </Box>
 
-          <div className="mt-4">
+          <Box mt="1rem">
             <Title text="Projects" color={themeColors[1]} />
 
             {resumeData.projects.map((project, index) => (
@@ -189,9 +223,9 @@ function TemplateOne({ resumeData, colorPalatte, containerWidth }) {
                 bgColor={themeColors[2]}
               />
             ))}
-          </div>
+          </Box>
 
-          <div className="mt-4">
+          <Box mt="1rem">
             <Title text="Skills" color={themeColors[1]} />
 
             <SkillSection
@@ -199,47 +233,53 @@ function TemplateOne({ resumeData, colorPalatte, containerWidth }) {
               accentColor={themeColors[3]}
               bgColor={themeColors[2]}
             />
-          </div>
+          </Box>
 
-          <div className="mt-4">
+          <Box mt="1rem">
             <Title text="Certifications" color={themeColors[1]} />
 
-            <div className="grid grid-cols-2 gap-2">
+            <Grid container spacing="0.5rem">
               {resumeData.certifications.map((certification, index) => (
-                <CertificationsInfo
-                  key={`cert_${index}`}
-                  title={certification.title}
-                  issuer={certification.issuer}
-                  year={certification.year}
-                  bgColor={themeColors[2]}
-                />
+                <Grid size={6} key={`cert_${index}`}>
+                  <CertificationsInfo
+                    title={certification.title}
+                    issuer={certification.issuer}
+                    year={certification.year}
+                    bgColor={themeColors[2]}
+                  />
+                </Grid>
               ))}
-            </div>
-          </div>
+            </Grid>
+          </Box>
 
           {resumeData.interests.length > 0 &&
             resumeData.interests[0] !== '' && (
-              <div className="mt-4">
+              <Box mt="1rem">
                 <Title text="Interests" color={themeColors[1]} />
-                <div className="flex items-center flex-wrap gap-3 mt-4">
+                <Stack direction="row" flexWrap="wrap" gap="0.75rem" mt="1rem">
                   {resumeData.interests.map((interest, index) => {
                     if (!interest) return null;
                     return (
-                      <div
+                      <Typography
+                        component="span"
+                        fontSize="10px"
+                        fontWeight="500"
+                        py="0.25rem"
+                        borderRadius="0.5rem"
+                        px="0.75rem"
+                        bgcolor={themeColors[2]}
                         key={`interest_${index}`}
-                        className="text-[10px] font-medium py-1 px-3 rounded-lg"
-                        style={{ backgroundColor: themeColors[2] }}
                       >
                         {interest}
-                      </div>
+                      </Typography>
                     );
                   })}
-                </div>
-              </div>
+                </Stack>
+              </Box>
             )}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

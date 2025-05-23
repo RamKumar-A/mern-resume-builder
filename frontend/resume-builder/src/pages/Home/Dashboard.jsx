@@ -8,6 +8,8 @@ import moment from 'moment';
 import ResumeSummaryCard from '../../components/Cards/ResumeSummaryCard';
 import Modal from '../../components/Modal';
 import CreateResumeForm from './CreateResumeForm';
+import { Box, Button, Dialog, Grid, Stack, Typography } from '@mui/material';
+import { purple } from '@mui/material/colors';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -30,7 +32,71 @@ function Dashboard() {
 
   return (
     <DashboardLayout>
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-0 ">
+      <Stack py="1.25rem" gap="1.25rem">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography component="h2" fontSize={15} fontWeight={600}>
+            All Resumes
+          </Typography>
+          <Box>
+            <Button
+              size="small"
+              startIcon={
+                <LuCirclePlus
+                  style={{
+                    backgroundColor: purple[50],
+                    color: purple[500],
+                    borderRadius: '1rem',
+                  }}
+                />
+              }
+              onClick={() => setOpenCreateModal(true)}
+              sx={{
+                fontWeight: 550,
+                bgcolor: '#fff',
+                color: purple[500],
+                border: `1px solid ${purple[100]}`,
+                '&:hover': {
+                  border: `1px solid ${purple[200]}`,
+                  bgcolor: purple[50],
+                },
+                textTransform: 'capitalize',
+              }}
+            >
+              Add New Resume
+            </Button>
+          </Box>
+        </Stack>
+        <Grid container columnSpacing={2} rowSpacing={2}>
+          {allResumes?.map((resume) => (
+            <ResumeSummaryCard
+              key={resume?._id}
+              imgUrl={resume?.thumbnailLink || null}
+              title={resume?.title}
+              lastUpdated={
+                resume?.updatedAt
+                  ? moment(resume.updatedAt).format('DD MM YYYY')
+                  : ''
+              }
+              onSelect={() => navigate(`/resume/${resume?._id}`)}
+            />
+          ))}
+        </Grid>
+      </Stack>
+
+      <Dialog open={openCreateModal} onClose={() => setOpenCreateModal(false)}>
+        <CreateResumeForm />
+      </Dialog>
+    </DashboardLayout>
+  );
+}
+
+export default Dashboard;
+
+/* <div className="grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-7 pt-1 pb-6 px-4 md:px-0 ">
         <div
           className="h-[300px] flex items-center justify-center flex-col gap-5 bg-white rounded-lg border border-purple-100 hover:border-purple-300 hover:bg-purple-50/50 cursor-pointer"
           onClick={() => setOpenCreateModal(true)}
@@ -53,7 +119,7 @@ function Dashboard() {
             onSelect={() => navigate(`/resume/${resume?._id}`)}
           />
         ))}
-      </div>
+      </div> 
       <Modal
         isOpen={openCreateModal}
         onClose={() => setOpenCreateModal(false)}
@@ -63,8 +129,4 @@ function Dashboard() {
           <CreateResumeForm />
         </div>
       </Modal>
-    </DashboardLayout>
-  );
-}
-
-export default Dashboard;
+      */

@@ -1,29 +1,49 @@
+import { Box, Stack, Typography } from '@mui/material';
+import { blueGrey, purple } from '@mui/material/colors';
+
 function Tabs({ tabs, activeTab, setActiveTab }) {
   return (
-    <div className="my-2">
-      <div className="flex">
+    <Box my="0.5rem">
+      <Box display="flex">
         {tabs.map((tab) => (
-          <button
+          <Box
+            component="button"
+            position="relative"
+            px={{ xs: '0.75rem', sm: '1rem' }}
+            fontSize="0.875rem"
+            fontWeight="500"
+            sx={{
+              color: activeTab === tab.label ? purple[500] : blueGrey[400],
+              '&:hover': {
+                color: blueGrey[700],
+              },
+              cursor: 'pointer',
+            }}
             key={tab.label}
-            className={`relative px-3 md:px-4 py-2 text-sm font-medium ${
-              activeTab === tab.label
-                ? 'text-primary'
-                : 'text-gray-500 hover:text-gray-700'
-            } cursor-pointer`}
             onClick={() => setActiveTab(tab.label)}
           >
-            <div className="flex items-center ">
-              <span className="text-[14px] font-semibold text-purple-700">
+            <Stack direction="row" alignItems="center">
+              <Typography component="span" fontSize="14px" fontWeight="600">
                 {tab.label}
-              </span>
-            </div>
+              </Typography>
+            </Stack>
             {activeTab === tab.label && (
-              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-purple-500/85 to-purple-700"></div>
+              <Box
+                position="absolute"
+                bottom="0"
+                left="0"
+                width="100%"
+                height="0.125rem"
+                sx={{
+                  background:
+                    'linear-gradient(90deg,rgba(156, 39, 176, 1) 0%, rgba(123, 31, 162, 1) 50%)',
+                }}
+              ></Box>
             )}
-          </button>
+          </Box>
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

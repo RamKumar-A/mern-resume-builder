@@ -2,29 +2,18 @@
 
 @import 'tailwindcss';
 
-@theme {
-  --font-display: 'Urbanist', sans-serif;
-  --breakpoint-3xl: 1920px;
-  --color-primary: #932be7;
+html {
+  font-family: 'Urbanist', sans-serif;
 }
 
-@layer base {
-  html {
-    font-display: var(--font-display);
-  }
-  body {
-    background-color: #fcfbfc;
-    overflow-x: hidden;
-  }
+body {
+  background-color: #fcfbfc;
+  overflow-x: hidden;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 100, 100, 0.4);
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+::-webkit-scrollbar {
+  appearance: none;
+  display: none;
 }
 
 @layer utilities {
@@ -43,7 +32,23 @@
 }
 
 .input-box {
-  @apply w-full flex justify-between gap-3 text-sm text-black bg-gray-50/50 rounded px-4 py-3 mb-4 mt-3 border border-gray-100 outline-none focus-within:border-purple-300;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #000;
+  background-color: #f9fafb80;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  margin-top: 0.75rem;
+  border: 1px solid #f3f4f6;
+  outline: none;
+}
+
+.input-box:focus-within {
+  border-color: oklch(82.7% 0.119 306.383);
 }
 
 .btn-primary {
@@ -55,9 +60,38 @@
 }
 
 .btn-small-light {
-  @apply flex items-center gap-2 text-[12px] font-semibold text-purple-800 bg-purple-600/15 border border-gray-50 hover:border-purple-400 px-3 py-1.5 rounded cursor-pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6e11b0;
+  background-color: #9810fa3a;
+  border: 1px solid #f9fafb;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.btn-small-light:hover {
+  border-color: oklch(71.4% 0.203 305.504);
 }
 
 .form-input {
-  @apply w-full text-sm text-black outline-none bg-white border border-slate-100 px-2.5 py-3 rounded-md mt-2 placeholder:text-gray-500 focus-within:border-purple-300;
+  width: 100%;
+  font-size: 0.875rem;
+  color: #000;
+  outline: none;
+  background-color: #fff;
+  border: 1px solid #f1f5f9;
+  padding: 0.75rem 0.625rem;
+  border-radius: 0.375rem;
+  margin-top: 0.5rem;
+}
+
+.form-input:focus-within {
+  border-color: oklch(82.7% 0.119 306.383);
+}
+.form-input::placeholder {
+  color: #6a7282;
 }

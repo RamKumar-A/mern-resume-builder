@@ -8,6 +8,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import { API_PATH } from '../../utils/apiPaths';
 import {
   LuArrowLeft,
+  LuArrowRight,
   LuCircleAlert,
   LuDownload,
   LuPalette,
@@ -32,6 +33,24 @@ import {
   fixTailwindColors,
 } from '../../utils/helper';
 import ThemeSelector from './ThemeSelector';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { amber, purple } from '@mui/material/colors';
+import { HiEllipsisVertical } from 'react-icons/hi2';
+import MobileActions from '../../components/MobileActions';
+import DeleteDialog from '../../components/Modals/DeleteDialog';
 
 function EditResume() {
   const { resumeId } = useParams();
@@ -42,6 +61,11 @@ function EditResume() {
   const [baseWidth, setBaseWidth] = useState(800);
   const [openThemeSelector, setOpenThemeSelector] = useState(false);
   const [openPreviewModal, setOpenPreviewModal] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  function handleCloseDeleteDialog() {
+    setOpenDeleteDialog(false);
+  }
 
   const [currentPage, setCurrentPage] = useState('profile-info');
   const [progress, setProgress] = useState(0);
@@ -540,13 +564,11 @@ function EditResume() {
   };
 
   // Delete Resume
-  const handleDeleteResume = async () => {
+  const handleDeleteResume = async (id) => {
     try {
       setIsLoading(true);
       // eslint-disable-next-line no-unused-vars
-      const response = await axiosInstance.delete(
-        API_PATH.RESUME.DELETE(resumeId)
-      );
+      const response = await axiosInstance.delete(API_PATH.RESUME.DELETE(id));
       toast.success('Resume Deleted Successfully!');
       navigate('/dashboard');
     } catch (err) {
@@ -581,8 +603,19 @@ function EditResume() {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between gap-5 bg-white rounded-lg border border-purple-100 py-3 px-4 mb-4">
+      <Box mx="auto">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          gap="1.25rem"
+          bgcolor="#fff"
+          borderRadius="0.5rem"
+          border="1px solid #f3e8ff "
+          py="0.75rem"
+          mb="1rem"
+          px="1rem"
+        >
           <TitleInput
             title={resumeData.title}
             setTitle={(value) =>
@@ -592,74 +625,145 @@ function EditResume() {
               }))
             }
           />
-          <div className="flex items-center gap-4">
+          <MobileActions
+            setOpenPreviewModal={setOpenPreviewModal}
+            setOpenThemeSelector={setOpenThemeSelector}
+            handleDeleteResume={() => handleDeleteResume(resumeId)}
+            openDeleteDialog={openDeleteDialog}
+            setOpenDeleteDialog={setOpenDeleteDialog}
+          />
+          <Stack
+            display={{ xs: 'none', sm: 'flex' }}
+            direction="row"
+            alignItems="center"
+            gap="1rem"
+          >
             <button
               className="btn-small-light"
               onClick={() => setOpenThemeSelector(true)}
             >
-              <LuPalette className="text-base" />
-              <span className="hidden md:block">Change Theme</span>
+              <LuPalette style={{ fontSize: '1rem' }} />
+              <Typography display={{ xs: 'none', md: 'block' }} variant="span">
+                Change Theme
+              </Typography>
             </button>
-            <button className="btn-small-light" onClick={handleDeleteResume}>
-              <LuTrash2 className="text-base" />
-              <span className="hidden md:block">Delete</span>
+            <button
+              className="btn-small-light"
+              onClick={() => setOpenDeleteDialog(true)}
+            >
+              <LuTrash2 style={{ fontSize: '1rem' }} />
+              <Typography display={{ xs: 'none', md: 'block' }} variant="span">
+                Delete
+              </Typography>
             </button>
             <button
               className="btn-small-light"
               onClick={() => setOpenPreviewModal(true)}
             >
-              <LuDownload className="text-base" />
-              <span className="hidden md:block">Preview & Download</span>
+              <LuDownload style={{ fontSize: '1rem' }} />
+              <Typography display={{ xs: 'none', md: 'block' }} variant="span">
+                Preview & Download
+              </Typography>
             </button>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 ">
-          <div className="bg-white rounded-lg border border-purple-100 overflow-hidden">
+          </Stack>
+        </Stack>
+        <Grid container className="" spacing="1.25rem">
+          <Grid
+            size={{ xs: 12, md: 6 }}
+            bgcolor="#fff"
+            borderRadius="0.5rem"
+            border="1px solid"
+            borderColor={purple[100]}
+            overflow="hidden"
+          >
             <StepProgress progress={progress} />
             {renderForm()}
-            <div className="mx-5">
+            <Box className="mx-5">
               {errorMsg && (
-                <div className="flex items-center gap-2 text-[11px] font-medium text-amber-600 bg-amber-100 px-2 py-0.5 my-1 rounded">
-                  <LuCircleAlert className="text-base" />
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  gap="0.5rem"
+                  color={amber[600]}
+                  bgcolor={amber[100]}
+                  px="0.5rem "
+                  py="0.125rem"
+                  my="0.25rem"
+                  borderRadius="0.25rem"
+                  fontSize="11px"
+                  fontWeight="500"
+                >
+                  <LuCircleAlert style={{ fontSize: '1rem' }} />
                   {errorMsg}
-                </div>
+                </Stack>
               )}
-              <div className="flex items-end justify-end gap-3 mt-3 mb-5">
-                <button
-                  className="btn-small-light"
-                  onClick={goBack}
-                  disabled={isLoading}
-                >
-                  <LuArrowLeft className="text-base" />
-                  Back
-                </button>
-                <button
-                  className="btn-small-light"
-                  onClick={uploadResumeImages}
-                  disabled={isLoading}
-                >
-                  <LuSave className="text-base" />
-                  {isLoading ? 'Updating...' : 'Save & Exit'}
-                </button>
-                <button
-                  className="btn-small"
-                  onClick={validateAndNext}
-                  disabled={isLoading}
-                >
-                  {currentPage === 'additionalInfo' && (
-                    <LuDownload className="text-base" />
-                  )}
-                  {currentPage === 'addtionalInfo'
-                    ? 'Preview & Download'
-                    : 'Next'}
-                  {currentPage !== 'addtionalInfo' && (
-                    <LuArrowLeft className="text-base rotate-180" />
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-          <div ref={resumeRef} className="h-[100vh]">
+              <Stack
+                direction="row"
+                alignItems="flex-end"
+                justifyContent="flex-end"
+                gap="0.5rem"
+                mt="0.75rem"
+                mb="1.25rem"
+              >
+                <ButtonGroup size="small" color={purple[800]}>
+                  <Button
+                    // className="btn-small-light"
+                    onClick={goBack}
+                    disabled={isLoading}
+                    startIcon={<LuArrowLeft size={12} />}
+                    size="small"
+                    sx={{
+                      color: purple[700],
+                      bgcolor: '',
+                      fontSize: '0.7rem',
+                    }}
+                  >
+                    <Typography variant="span" className="">
+                      Back
+                    </Typography>
+                  </Button>
+                  <Button
+                    // className="btn-small-light"
+                    onClick={uploadResumeImages}
+                    disabled={isLoading}
+                    startIcon={<LuSave size={12} />}
+                    size="small"
+                    sx={{
+                      bgcolor: '',
+                      fontSize: '0.7rem',
+                      color: purple[700],
+                    }}
+                  >
+                    <Typography variant="span" className="">
+                      {isLoading ? 'Updating...' : 'Save'}
+                    </Typography>
+                  </Button>
+                  <Button
+                    size="small"
+                    // className="btn-small"
+                    onClick={validateAndNext}
+                    disabled={isLoading}
+                    sx={{
+                      color: purple[700],
+                      pointerEvents: currentPage === 'additionalInfo' && 'none',
+                      opacity: currentPage === 'additionalInfo' && '0.5',
+                      fontSize: '0.7rem',
+                    }}
+                    endIcon={
+                      currentPage !== 'additionalInfo' && (
+                        <LuArrowRight size={12} />
+                      )
+                    }
+                  >
+                    <Typography variant="span" className="">
+                      Next
+                    </Typography>
+                  </Button>
+                </ButtonGroup>
+              </Stack>
+            </Box>
+          </Grid>
+          <Grid ref={resumeRef} className="h-[100vh]" size={{ xs: 12, md: 6 }}>
             {/* Resume Template */}
             <RenderResume
               templateId={resumeData?.template?.theme || ''}
@@ -667,15 +771,15 @@ function EditResume() {
               colorPalatte={resumeData?.template?.colorPalatte || ''}
               containerWidth={baseWidth}
             />
-          </div>
-        </div>
-      </div>
+          </Grid>
+        </Grid>
+      </Box>
       <Modal
         isOpen={openThemeSelector}
         onClose={() => setOpenThemeSelector(false)}
         title="Change Theme"
       >
-        <div className="w-[90vw] h-[80vh]">
+        <Box component="div" width="90vw" height="80vh">
           <ThemeSelector
             selectedTheme={resumeData?.template}
             setSelectedTheme={(value) => {
@@ -687,25 +791,34 @@ function EditResume() {
             resumeData={resumeData}
             onClose={() => setOpenThemeSelector(false)}
           />
-        </div>
+        </Box>
       </Modal>
+
       <Modal
         isOpen={openPreviewModal}
         onClose={() => setOpenPreviewModal(false)}
         title={resumeData.title}
         showActionBtn
         actionBtnText="Download"
-        actionBtnIcon={<LuDownload className="text-base" />}
+        actionBtnIcon={<LuDownload style={{ fontSize: '1rem' }} />}
         onActionClick={() => reactToPrintFn()}
       >
-        <div ref={resumeDownloadRef} className="w-[98vw] h-[90vh]">
-          <RenderResume
-            templateId={resumeData?.template?.theme || ''}
-            resumeData={resumeData}
-            colorPalatte={resumeData?.template?.colorPalatte}
-          />
-        </div>
+        <Grid container>
+          <Grid size={12} component="div" ref={resumeDownloadRef}>
+            <RenderResume
+              templateId={resumeData?.template?.theme || ''}
+              resumeData={resumeData}
+              colorPalatte={resumeData?.template?.colorPalatte}
+              containerWidth={window.innerWidth < 768 && 800}
+            />
+          </Grid>
+        </Grid>
       </Modal>
+      <DeleteDialog
+        handler={() => handleDeleteResume(resumeId)}
+        open={openDeleteDialog}
+        onClose={handleCloseDeleteDialog}
+      />
     </DashboardLayout>
   );
 }

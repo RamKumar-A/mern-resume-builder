@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATH } from '../../utils/apiPaths';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { grey, red } from '@mui/material/colors';
 
 function CreateResumeForm() {
   const [title, setTitle] = useState('');
@@ -40,13 +42,26 @@ function CreateResumeForm() {
   }
 
   return (
-    <div className="w-[90vw] md:w-[70vh] p-7 flex flex-col justify-center">
-      <h3 className="text-lg font-semibold text-black">Create New Resume</h3>
-      <p className="text-xs text-slate-700 mt-[5px] mb-3">
+    <Stack p="1rem" justifyContent="center">
+      <Typography
+        component="h3"
+        fontSize="1.125rem"
+        fontWeight="600"
+        color="#000"
+      >
+        Create New Resume
+      </Typography>
+      <Typography
+        component="p"
+        fontSize="0.7rem"
+        color={grey[700]}
+        mt="5px"
+        mb="0.75rem"
+      >
         Give your resume a title to get started. You can edit all details later.
-      </p>
+      </Typography>
 
-      <form onSubmit={handleCreateResume}>
+      <Box component="form" onSubmit={handleCreateResume}>
         <Input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -55,13 +70,30 @@ function CreateResumeForm() {
           type="text"
         />
 
-        {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+        {error && (
+          <Typography
+            component="p"
+            color={red[500]}
+            pb="0.625rem"
+            fontSize="0.75rem"
+          >
+            {error}
+          </Typography>
+        )}
 
-        <button type="submit" className="btn-primary">
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{
+            bgcolor: '#000',
+            color: '#fff',
+          }}
+          fullWidth
+        >
           Create Resume
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Box>
+    </Stack>
   );
 }
 

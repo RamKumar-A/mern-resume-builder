@@ -1,5 +1,14 @@
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import Input from '../../../components/Inputs/Input';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { blueGrey, grey, purple, red } from '@mui/material/colors';
 
 function ProjectsDetailForm({
   projectInfo,
@@ -8,17 +17,28 @@ function ProjectsDetailForm({
   removeArrayItem,
 }) {
   return (
-    <div className="px-5 pt-5">
-      <h2 className="text-lg font-semibold text-gray-900">Projects</h2>
-      <div className="mt-4 flex flex-col gap-4 mb-3">
+    <Box px="1.25rem" pt="1.25rem">
+      <Typography
+        fontSize={{ xs: '1rem', sm: '1.125rem' }}
+        component="h2"
+        fontWeight={500}
+        color={blueGrey[900]}
+      >
+        Projects
+      </Typography>
+      <Stack gap="1rem" mt="1rem" mb="0.75rem">
         {projectInfo.map((project, index) => (
-          <div
+          <Box
             key={index}
-            className="border border-gray-200/80 p-4 rounded-lg relative"
+            border={`1px solid ${blueGrey[100]}`}
+            p="1rem"
+            borderRadius="0.5rem"
+            position="relative"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="col-span-2">
+            <Grid container columnSpacing={2} rowSpacing={1}>
+              <Grid size={12}>
                 <Input
+                  id={`title_${index}`}
                   label="Project Title"
                   placeholder="Portfolio Website"
                   type="text"
@@ -27,58 +47,96 @@ function ProjectsDetailForm({
                     updateArrayItem(index, 'title', e.target.value)
                   }
                 />
-              </div>
-              <div className="col-span-2">
+              </Grid>
+              <Grid size={12}>
                 <label
-                  htmlFor=""
-                  className="text-xs font-medium text-slate-600"
+                  htmlFor={`description_${index}`}
+                  style={{
+                    fontSize: '0.8rem',
+                    color: grey[600],
+                    fontWeight: '500',
+                  }}
                 >
                   Description
                 </label>
                 <textarea
+                  id={`description_${index}`}
                   placeholder="Short description about the project"
-                  className="form-input w-full mt-1"
+                  className="form-input"
+                  style={{
+                    marginTop: '0.25rem',
+                    width: '100%',
+                  }}
                   rows={3}
                   value={project.description || ''}
                   onChange={(e) =>
                     updateArrayItem(index, 'description', e.target.value)
                   }
                 />
-              </div>
-              <Input
-                label="GitHub Link"
-                placeholder="https://github.com/username/project"
-                type="url"
-                value={project.github || ''}
-                onChange={(e) =>
-                  updateArrayItem(index, 'github', e.target.value)
-                }
-              />
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`github_${index}`}
+                  label="GitHub Link"
+                  placeholder="https://github.com/username/project"
+                  type="url"
+                  value={project.github || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'github', e.target.value)
+                  }
+                />
+              </Grid>
 
-              <Input
-                label="Live Demo URL"
-                placeholder="https://yourproject.live/"
-                type="url"
-                value={project.liveDemo || ''}
-                onChange={(e) =>
-                  updateArrayItem(index, 'liveDemo', e.target.value)
-                }
-              />
-            </div>
+              <Grid size={{ xs: 12, sm: 6 }}>
+                <Input
+                  id={`liveURL_${index}`}
+                  label="Live Demo URL"
+                  placeholder="https://yourproject.live/"
+                  type="url"
+                  value={project.liveDemo || ''}
+                  onChange={(e) =>
+                    updateArrayItem(index, 'liveDemo', e.target.value)
+                  }
+                />
+              </Grid>
+            </Grid>
             {projectInfo.length > 1 && (
-              <button
+              <IconButton
                 type="button"
-                className="absolute top-3 right-3 text-sm text-red-600 hover:underline cursor-pointer"
+                sx={{
+                  position: 'absolute',
+                  top: '0.75rem',
+                  right: '0.75rem',
+                  fontSize: '14px',
+                  color: red[500],
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                }}
                 onClick={() => removeArrayItem(index)}
               >
                 <LuTrash2 />
-              </button>
+              </IconButton>
             )}
-          </div>
+          </Box>
         ))}
-        <button
+        <Button
           type="button"
-          className="self-start flex items-center gap-2 px-4 py-2 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer"
+          sx={{
+            bgcolor: '#f3e8ff',
+            color: '#6e11b0 ',
+            '&:hover': {
+              bgcolor: purple[100],
+            },
+            display: 'flex',
+            alignSelf: 'self-start',
+            alignItems: 'center',
+            fontSize: '0.875rem',
+            textTransform: 'capitalize',
+          }}
+          size="small"
+          color="#6e11b0 "
+          startIcon={<LuPlus />}
           onClick={() =>
             addArrayItem({
               title: '',
@@ -88,11 +146,10 @@ function ProjectsDetailForm({
             })
           }
         >
-          <LuPlus />
           Add Project
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Stack>
+    </Box>
   );
 }
 

@@ -16,18 +16,31 @@ import WorkExperience from '../ResumeSections/WorkExperience';
 import ProjectInfo from '../ResumeSections/ProjectInfo';
 import SkillSection from '../ResumeSections/SkillSection';
 import CertificationsInfo from '../ResumeSections/CertificationsInfo';
+import { Box, Grid, Stack, Typography } from '@mui/material';
 
 const DEFAULT_THEME = ['#EBFDFF', '#A1F4FD', '#CEFAFE', '#00B8DB', '#4A5565'];
 
 function Title({ text, color }) {
   return (
-    <div className="relative w-fit mb-2.5">
-      <span
-        className="absolute bottom-0 left-0 w-full h-2"
-        style={{ backgroundColor: color }}
-      ></span>
-      <h2 className={`relative text-sm font-bold`}>{text}</h2>
-    </div>
+    <Box width="fit-content" position="relative" mb="0.625rem">
+      <Box
+        width="100%"
+        height="0.5rem"
+        position="absolute"
+        bottom="0"
+        left="0"
+        component="span"
+        bgcolor={color}
+      ></Box>
+      <Typography
+        component="h2"
+        fontSize="0.875rem"
+        fontWeight="700"
+        position="relative"
+      >
+        {text}
+      </Typography>
+    </Box>
   );
 }
 
@@ -46,68 +59,95 @@ function TemplateTwo({ resumeData, colorPalatte, containerWidth }) {
   }, [containerWidth]);
 
   return (
-    <div
+    <Box
       ref={resumeRef}
-      className="p-3 bg-white"
-      style={{
+      width={containerWidth > 0 ? `${baseWidth}px` : 'auto'}
+      height="auto"
+      p="0.75rem"
+      bgcolor="#fff"
+      sx={{
         transform: containerWidth > 0 ? `scale(${scale})` : 'none',
         transformOrigin: 'top left',
-        width: containerWidth > 0 ? `${baseWidth}px` : 'auto',
-        height: 'auto',
       }}
     >
-      <div className="px-10 pt-10 pb-5">
-        <div className="flex items-start gap-5 mb-5">
-          <div
-            className="w-[140px] h-[140px] max-w-[140px] rounded-2xl flex items-center justify-center"
-            style={{ backgroundColor: themeColors[1] }}
+      <Box px="2.5rem" pt="2.5rem" pb="1.25rem">
+        <Stack direction="row" alignItems="center" mb="1.25rem" gap="1.25rem">
+          <Stack
+            direction="row"
+            width="140px"
+            height="140px"
+            maxWidth="140px"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="1rem"
+            bgcolor={themeColors[1]}
           >
             {resumeData.profileInfo.profilePreviewUrl ? (
-              <img
-                src={resumeData.profileInfo.profilePreviewUrl}
-                className="w-[140px] h-[140px] rounded-2xl object-cover"
-                alt=""
-              />
+              <Box width="140px" height="140px">
+                <img
+                  src={resumeData.profileInfo.profilePreviewUrl}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '1rem',
+                    objectFit: 'cover',
+                  }}
+                  alt=""
+                />
+              </Box>
             ) : (
-              <div
-                className="w-[140px] h-[140px] flex items-center justify-center text-5xl rounded-full"
-                style={{ color: themeColors[4] }}
+              <Stack
+                direction="row"
+                width="140px"
+                height="140px"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="3rem"
+                color={themeColors[4]}
+                className="rounded-full"
               >
                 <LuUser />
-              </div>
+              </Stack>
             )}
-          </div>
+          </Stack>
 
-          <div>
-            <div className="grid grid-cols-12 gap-2 items-center">
-              <div className="col-span-6">
-                <h2 className="text-2xl font-bold">
+          <Box>
+            <Grid container spacing="0.5rem" alignItems="center">
+              <Grid size={6}>
+                <Typography component="h2" fontSize="1.5rem" fontWeight="700">
                   {resumeData.profileInfo.fullName}
-                </h2>
-                <p className="text-[15px] font-semibold mb-2">
+                </Typography>
+                <Typography
+                  component="p"
+                  fontSize="14px"
+                  fontWeight="600"
+                  mb="0.5rem"
+                >
                   {resumeData.profileInfo.designation}
-                </p>
+                </Typography>
                 <ContactInfo
                   icon={<LuMapPinHouse />}
                   iconBG={themeColors[2]}
                   value={resumeData.contactInfo.location}
                 />
-              </div>
+              </Grid>
 
-              <div className="col-span-6 flex flex-col gap-5 mt-2">
-                <ContactInfo
-                  icon={<LuMail />}
-                  iconBG={themeColors[2]}
-                  value={resumeData.contactInfo.email}
-                />
+              <Grid size={6}>
+                <Stack gap="1.25rem" mt="0.5rem">
+                  <ContactInfo
+                    icon={<LuMail />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.contactInfo.email}
+                  />
 
-                <ContactInfo
-                  icon={<LuPhone />}
-                  iconBG={themeColors[2]}
-                  value={resumeData.contactInfo.phone}
-                />
-              </div>
-              <div className="col-span-6">
+                  <ContactInfo
+                    icon={<LuPhone />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.contactInfo.phone}
+                  />
+                </Stack>
+              </Grid>
+              <Grid size={6}>
                 {resumeData.contactInfo.linkedin && (
                   <ContactInfo
                     icon={<RiLinkedinLine />}
@@ -115,27 +155,27 @@ function TemplateTwo({ resumeData, colorPalatte, containerWidth }) {
                     value={resumeData.contactInfo.linkedin}
                   />
                 )}
-              </div>
+              </Grid>
 
-              <div className="col-span-6">
+              <Grid size={6}>
                 <ContactInfo
                   icon={<LuRss />}
                   iconBG={themeColors[2]}
                   value={resumeData.contactInfo.website}
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mx-10 pb-5">
-        <div>
+              </Grid>
+            </Grid>
+          </Box>
+        </Stack>
+      </Box>
+      <Box mx="2.5rem" pb="1.25rem">
+        <Box>
           <Title text="Professional Summary" color={themeColors[1]} />
-          <p className="text-sm font-medium">
+          <Typography component="p" fontSize="0.875rem" fontWeight="500">
             {resumeData.profileInfo.summary}
-          </p>
-        </div>
-        <div className="mt-4">
+          </Typography>
+        </Box>
+        <Box mt="1rem">
           <Title text="Work Experience" color={themeColors[1]} />
 
           {resumeData.workExperience.map((data, index) => (
@@ -150,9 +190,9 @@ function TemplateTwo({ resumeData, colorPalatte, containerWidth }) {
               description={data.description}
             />
           ))}
-        </div>
+        </Box>
 
-        <div className="mt-4">
+        <Box mt="1rem">
           <Title text="Projects" color={themeColors[1]} />
 
           {resumeData.projects.map((project, index) => (
@@ -165,41 +205,43 @@ function TemplateTwo({ resumeData, colorPalatte, containerWidth }) {
               bgColor={themeColors[2]}
             />
           ))}
-        </div>
+        </Box>
 
-        <div className="mt-5">
+        <Box mt="1rem">
           <Title text="Education" color={themeColors[1]} />
-          <div className="grid grid-cols-2 gap-3">
+          <Grid container spacing="0.75rem">
             {resumeData.education.map((data, index) => (
-              <EducationInfo
-                key={`education_${index}`}
-                degree={data.degree}
-                institution={data.institution}
-                duration={`${formatYearMonth(
-                  data.startDate
-                )} - ${formatYearMonth(data.endDate)}`}
-              />
+              <Grid key={`education_${index}`} size={6}>
+                <EducationInfo
+                  degree={data.degree}
+                  institution={data.institution}
+                  duration={`${formatYearMonth(
+                    data.startDate
+                  )} - ${formatYearMonth(data.endDate)}`}
+                />
+              </Grid>
             ))}
-          </div>
-        </div>
+          </Grid>
+        </Box>
 
-        <div className="mt-4">
+        <Box mt="1rem">
           <Title text="Certifications" color={themeColors[1]} />
 
-          <div className="grid grid-cols-2 gap-6">
+          <Grid container spacing="1.5rem">
             {resumeData.certifications.map((data, index) => (
-              <CertificationsInfo
-                key={`cert_${index}`}
-                title={data.title}
-                issuer={data.issuer}
-                year={data.year}
-                bgColor={themeColors[2]}
-              />
+              <Grid size={6} key={`cert_${index}`}>
+                <CertificationsInfo
+                  title={data.title}
+                  issuer={data.issuer}
+                  year={data.year}
+                  bgColor={themeColors[2]}
+                />
+              </Grid>
             ))}
-          </div>
-        </div>
+          </Grid>
+        </Box>
 
-        <div className="mt-4">
+        <Box mt="1rem">
           <Title text="Skills" color={themeColors[1]} />
 
           <SkillSection
@@ -207,41 +249,52 @@ function TemplateTwo({ resumeData, colorPalatte, containerWidth }) {
             accentColor={themeColors[3]}
             bgColor={themeColors[2]}
           />
-        </div>
+        </Box>
 
-        <div className="grid grid-cols-2 gap-10 mt-4">
-          <div className="">
+        <Grid container spacing="2.5rem" mt="1rem">
+          <Grid size={6} className="">
             <Title text="Languages" color={themeColors[1]} />
             <LanguageSection
               languages={resumeData.languages}
               accentColor={themeColors[3]}
               bgColor={themeColors[2]}
             />
-          </div>
+          </Grid>
 
           {resumeData.interests.length > 0 &&
             resumeData.interests[0] !== '' && (
-              <div className="">
+              <Grid size={6} className="">
                 <Title text="Interests" color={themeColors[1]} />
-                <div className="flex items-center flex-wrap gap-3 mt-4">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  flexWrap="wrap"
+                  gap="0.75rem"
+                  mt="1rem"
+                >
                   {resumeData.interests.map((interest, index) => {
                     if (!interest) return null;
                     return (
-                      <div
+                      <Typography
+                        component="span"
+                        fontSize="10px"
+                        fontWeight="500"
+                        py="0.25rem"
+                        borderRadius="0.5rem"
+                        px="0.75rem"
+                        bgcolor={themeColors[2]}
                         key={`interest_${index}`}
-                        className="text-[10px] font-medium py-1 px-3 rounded-lg"
-                        style={{ backgroundColor: themeColors[2] }}
                       >
                         {interest}
-                      </div>
+                      </Typography>
                     );
                   })}
-                </div>
-              </div>
+                </Stack>
+              </Grid>
             )}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
 

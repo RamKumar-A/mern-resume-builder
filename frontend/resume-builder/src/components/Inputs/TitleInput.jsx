@@ -1,38 +1,67 @@
+import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { blueGrey, purple } from '@mui/material/colors';
 import { useState } from 'react';
 import { LuCheck, LuPencil } from 'react-icons/lu';
 
 function TitleInput({ title, setTitle }) {
   const [showInput, setShowInput] = useState(false);
   return (
-    <div className="flex items-center gap-3">
+    <Stack direction="row" alignItems="center" gap="0.75rem" flex="1">
       {showInput ? (
         <>
-          <input
+          <Box
+            component="input"
             type="text"
             placeholder="Resume title"
-            className="text-sm md:text-[17px] bg-transparent outline-none text-black font-semibold border-b border-gray-300 "
+            sx={{
+              outline: 'none',
+            }}
+            fontSize={{ xs: '14px', sm: '17px' }}
+            color="#000"
+            fontWeight="600"
+            borderBottom={`1px solid ${blueGrey[300]}`}
+            bgcolor="transparent"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <button className="cursor-pointer">
+          <IconButton size="small">
             <LuCheck
-              className="text-base text-purple-600"
+              style={{
+                fontSize: '1rem',
+                color: purple[600],
+              }}
               onClick={() => setShowInput((prevState) => !prevState)}
             />
-          </button>
+          </IconButton>
         </>
       ) : (
         <>
-          <h2 className="">{title}</h2>
-          <button className="cursor-pointer">
+          <Typography
+            sx={{
+              lineClamp: '1',
+              overflow: 'hidden',
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: '1',
+            }}
+            className="line-clamp-1"
+            fontSize={{ xs: '0.875rem', sm: '1rem' }}
+            component="h2"
+          >
+            {title}
+          </Typography>
+          <IconButton size="small">
             <LuPencil
-              className="text-sm text-purple-600"
+              style={{
+                fontSize: '0.875rem',
+                color: purple[600],
+              }}
               onClick={() => setShowInput((prevState) => !prevState)}
             />
-          </button>
+          </IconButton>
         </>
       )}
-    </div>
+    </Stack>
   );
 }
 

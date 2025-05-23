@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useState } from 'react';
 import axiosInstance from '../utils/axiosInstance';
@@ -20,6 +19,11 @@ function UserProvider({ children }) {
     const fetchUser = async () => {
       try {
         const response = await axiosInstance.get(API_PATH.AUTH.GET_PROFILE);
+        const { token } = response.data;
+
+        if (token) {
+          localStorage.setItem('token', token);
+        }
       } catch (err) {
         console.error('User not authenticated', err);
         clearUser();

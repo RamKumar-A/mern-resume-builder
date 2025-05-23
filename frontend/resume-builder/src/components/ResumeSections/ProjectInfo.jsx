@@ -1,5 +1,7 @@
 import { LuExternalLink, LuGithub } from 'react-icons/lu';
 import ActionLink from './ActionLink';
+import { Box, Stack, Typography } from '@mui/material';
+import { blueGrey } from '@mui/material/colors';
 
 function ProjectInfo({
   title,
@@ -10,16 +12,25 @@ function ProjectInfo({
   isPreview,
 }) {
   return (
-    <div className="">
-      <h3
-        className={`${
-          isPreview ? 'text-xs' : 'text-base'
-        } font-semibold text-gray-900`}
+    <Box className="pb-2">
+      <Typography
+        component="h3"
+        fontSize={isPreview ? '0.75rem' : '1rem'}
+        fontWeight="600"
+        color={blueGrey[900]}
       >
         {title}
-      </h3>
-      <p className="text-sm text-gray-700 font-medium mt-1">{description}</p>
-      <div className="flex items-center gap-3 mt-2">
+      </Typography>
+      <Typography
+        component="p"
+        fontSize="0.875rem"
+        mt="0.25rem"
+        fontWeight="500"
+        color={blueGrey[700]}
+      >
+        {description}
+      </Typography>
+      <Stack direction="row" alignItems="center" gap="0.75rem" mt="0.5rem">
         {githubLink && (
           <ActionLink icon={<LuGithub />} link={githubLink} bgColor={bgColor} />
         )}
@@ -31,8 +42,8 @@ function ProjectInfo({
             bgColor={bgColor}
           />
         )}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   );
 }
 

@@ -1,14 +1,31 @@
+import { Box, Stack, Typography } from '@mui/material';
+
 function ContactInfo({ icon, iconBG, value }) {
   return (
-    <div className="flex items-center gap-3">
-      <div
-        className="w-[30px] h-[30px] flex items-center justify-center rounded-full"
-        style={{ backgroundColor: iconBG }}
+    <Stack direction="row" alignItems="center" gap="0.75rem">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        width="30px"
+        height="30px"
+        className="rounded-full"
+        bgcolor={iconBG}
       >
         {icon}
-      </div>
-      <p className="flex-1 text-[12px] font-medium break-all">{value}</p>
-    </div>
+      </Stack>
+      <Typography
+        fontSize="12px"
+        flex="1"
+        sx={{
+          wordBreak: 'break-all',
+        }}
+        fontWeight="500"
+        component="p"
+      >
+        {value}
+      </Typography>
+    </Stack>
   );
 }
 

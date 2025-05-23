@@ -1,21 +1,28 @@
+import { Box, Stack } from '@mui/material';
+import { cyan } from '@mui/material/colors';
+
 function Progress({ progress = 0, total = 5, bgColor, color }) {
   return (
-    <div className="flex gap-1.5">
+    <Stack direction="row" gap="0.375rem">
       {[...Array(total)].map((_, i) => (
-        <div
+        <Box
           key={i}
-          className={`w-2 h-2 rounded transition-all ${
-            i < progress ? 'bg-cyan-500' : 'bg-cyan-100'
-          }`}
+          width="0.5rem"
+          height="0.5rem"
+          borderRadius="0.25rem"
+          sx={{
+            transition: 'all',
+          }}
+          bgcolor={i < progress ? cyan[500] : cyan[100]}
           style={{
             backgroundColor:
               i < progress
                 ? color || 'rgba(1,1,1,1)'
                 : bgColor || 'rgba(1,1,1,0.1)',
           }}
-        ></div>
+        ></Box>
       ))}
-    </div>
+    </Stack>
   );
 }
 

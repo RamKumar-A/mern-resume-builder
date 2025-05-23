@@ -1,6 +1,15 @@
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import Input from '../../../components/Inputs/Input';
 import RatingInput from '../../../components/ResumeSections/RatingInput';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { blueGrey, grey, purple, red } from '@mui/material/colors';
 
 function AdditionalInfoForm({
   languages,
@@ -10,31 +19,57 @@ function AdditionalInfoForm({
   removeArrayItem,
 }) {
   return (
-    <div className="px-5 pt-5">
-      <h2 className="text-lg font-semibold text-gray-900">Additional Info</h2>
+    <Box px="1.25rem" pt="1.25rem">
+      <Typography
+        fontSize={{ xs: '1rem', sm: '1.125rem' }}
+        component="h2"
+        fontWeight={500}
+        color={blueGrey[900]}
+      >
+        Additional Info
+      </Typography>
 
       {/* Languages Section */}
-      <div className="mt-6">
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">Languages</h3>
-        <div className="flex flex-col gap-4">
+      <Box mt="1.5rem">
+        <Typography fontSize="0.8rem" color={blueGrey[700]} gutterBottom>
+          Languages
+        </Typography>
+        <Stack gap="1rem">
           {languages?.map((lang, index) => (
-            <div
+            <Box
               key={index}
-              className="border border-gray-200 p-4 rounded-lg relative"
+              border={`1px solid ${blueGrey[200]}`}
+              p="1rem"
+              borderRadius="0.5rem"
+              position="relative"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-                <Input
-                  label="Languages"
-                  placeholder="e.g. English"
-                  value={lang.name || ''}
-                  onChange={(e) =>
-                    updateArrayItem('languages', index, 'name', e.target.value)
-                  }
-                />
-                <div>
+              <Grid container columnSpacing={2} rowSpacing={1}>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Input
+                    id={`language_${index}`}
+                    label="Languages"
+                    placeholder="e.g. English"
+                    value={lang.name || ''}
+                    onChange={(e) =>
+                      updateArrayItem(
+                        'languages',
+                        index,
+                        'name',
+                        e.target.value
+                      )
+                    }
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
                   <label
                     htmlFor=""
-                    className="text-xs font-medium text-slate-600 mb-7 block"
+                    style={{
+                      fontSize: '0.75rem',
+                      fontWeight: '500',
+                      color: grey[600],
+                      marginBottom: '1.75rem',
+                      display: 'block',
+                    }}
                   >
                     Proficiency
                   </label>
@@ -47,38 +82,63 @@ function AdditionalInfoForm({
                     activeColor="#0ea5e9"
                     inactiveColor="#e0f2fe"
                   />
-                </div>
-              </div>
+                </Grid>
+              </Grid>
 
               {languages.length > 1 && (
-                <button
+                <IconButton
                   type="button"
-                  className="absolute top-3 right-3 text-sm text-red-600 hover:underline cursor-pointer"
+                  sx={{
+                    position: 'absolute',
+                    top: '0.75rem',
+                    right: '0.75rem',
+                    fontSize: '14px',
+                    color: red[500],
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
                   onClick={() => removeArrayItem('languages', index)}
                 >
                   <LuTrash2 />
-                </button>
+                </IconButton>
               )}
-            </div>
+            </Box>
           ))}
-          <button
+          <Button
             type="button"
-            className="self-start flex items-center gap-2 px-4 py-2 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer"
+            sx={{
+              bgcolor: '#f3e8ff',
+              color: '#6e11b0 ',
+              '&:hover': {
+                bgcolor: purple[50],
+              },
+              display: 'flex',
+              alignSelf: 'self-start',
+              alignItems: 'center',
+              fontSize: '0.875rem',
+              textTransform: 'capitalize',
+            }}
+            size="small"
+            color="#6e11b0 "
+            startIcon={<LuPlus />}
             onClick={() => addArrayItem('languages', { name: '', progress: 0 })}
           >
-            <LuPlus /> Add Language
-          </button>
-        </div>
-      </div>
-      {/* {console.log(interests)} */}
+            Add Language
+          </Button>
+        </Stack>
+      </Box>
 
       {/* Interests Section */}
-      <div className="mt-8 mb-4">
-        <h3 className="text-sm font-semibold text-gray-700">Interests</h3>
-        <div className="flex flex-col">
+      <Box className="mt-8 mb-4">
+        <Typography fontSize="0.875rem" className=" text-gray-700">
+          Interests
+        </Typography>
+        <Stack>
           {interests?.map((interest, index) => (
-            <div key={index} className="relative rounded-lg">
+            <Box key={index} className="relative rounded-lg">
               <Input
+                id={`interest_${index}`}
                 placeholder="e.g. Reading"
                 value={interest || ''}
                 onChange={(e) =>
@@ -87,26 +147,50 @@ function AdditionalInfoForm({
               />
 
               {interests.length > 1 && (
-                <button
+                <IconButton
                   type="button"
-                  className="absolute top-6.5 right-3 text-sm text-red-600 hover:underline cursor-pointer"
+                  sx={{
+                    position: 'absolute',
+                    top: '0.75rem',
+                    right: '0.75rem',
+                    fontSize: '14px',
+                    color: red[600],
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
                   onClick={() => removeArrayItem('interests', index)}
                 >
                   <LuTrash2 />
-                </button>
+                </IconButton>
               )}
-            </div>
+            </Box>
           ))}
-          <button
+          <Button
             type="button"
-            className="self-start flex items-center gap-2 px-4 py-2 rounded bg-purple-100 text-purple-800 text-sm font-medium hover:bg-purple-200 cursor-pointer"
+            sx={{
+              bgcolor: '#f3e8ff',
+              color: '#6e11b0 ',
+              '&:hover': {
+                bgcolor: purple[100],
+              },
+              display: 'flex',
+              alignSelf: 'self-start',
+              alignItems: 'center',
+              fontSize: '0.875rem',
+              textTransform: 'capitalize',
+            }}
+            size="small"
+            color="#6e11b0 "
+            // variant="outlined"
+            startIcon={<LuPlus />}
             onClick={() => addArrayItem('interests', '')}
           >
-            <LuPlus /> Add Interest
-          </button>
-        </div>
-      </div>
-    </div>
+            Add Interest
+          </Button>
+        </Stack>
+      </Box>
+    </Box>
   );
 }
 
