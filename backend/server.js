@@ -37,11 +37,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use('/uploads', (req, res, next) => {
-  // res.setHeader(
-  //   'Access-Control-Allow-Origin',
-  //   // 'http://localhost:5173'
-  //   // 'https://mern-resume-builder.vercel.app'
-  // );
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    // 'http://localhost:5173'
+    'https://mern-resume-builder.vercel.app'
+  );
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
