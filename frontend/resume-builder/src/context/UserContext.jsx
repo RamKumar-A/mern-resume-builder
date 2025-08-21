@@ -18,7 +18,8 @@ function UserProvider({ children }) {
     }
     const fetchUser = async () => {
       try {
-        const response = await axiosInstance.get(API_PATH.AUTH.GET_PROFILE);
+        const response = await axiosInstance.get(API_PATH.USER.GET_ME);
+
         const { token } = response.data;
 
         if (token) {

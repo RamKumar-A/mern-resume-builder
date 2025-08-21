@@ -31,26 +31,6 @@ body {
   }
 }
 
-.input-box {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  font-size: 0.875rem;
-  color: #000;
-  background-color: #f9fafb80;
-  border-radius: 0.25rem;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  margin-top: 0.75rem;
-  border: 1px solid #f3f4f6;
-  outline: none;
-}
-
-.input-box:focus-within {
-  border-color: oklch(82.7% 0.119 306.383);
-}
-
 .btn-primary {
   @apply w-full text-sm font-medium text-white bg-black shadow-lg shadow-purple-600/5 p-[10px] rounded-md my-1 hover:bg-purple-600/15 hover:text-black cursor-pointer;
 }

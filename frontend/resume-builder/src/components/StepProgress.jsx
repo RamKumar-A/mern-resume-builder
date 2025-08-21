@@ -11,12 +11,11 @@ function StepProgress({ progress }) {
       borderRadius="2px"
     >
       <Box
-        height="0.25rem"
+        height="100%"
         borderRadius="0.25rem"
         sx={{
           transition: 'all',
-          bgcolor:
-            'linear-gradient(90deg,rgba(156, 39, 176, 1) 0%, rgba(123, 31, 162, 1) 50%)',
+          bgcolor: purple[300],
         }}
         width={`${progress}%`}
       ></Box>

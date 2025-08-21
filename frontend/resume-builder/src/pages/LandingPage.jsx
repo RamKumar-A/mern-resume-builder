@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthDialog from '../components/Modals/AuthDialog';
 import { UserContext } from '../context/UserContext';
-import { blueGrey } from '@mui/material/colors';
+import { blueGrey, deepPurple, purple } from '@mui/material/colors';
 
 function LandingPage() {
   const { user } = useContext(UserContext);
@@ -63,9 +63,9 @@ function LandingPage() {
               onClick={handleCTA}
               variant="contained"
               sx={{
-                bgcolor: '#000',
+                bgcolor: purple[500],
                 px: 3,
-                py: 1.5,
+                py: 1.2,
                 borderRadius: 2.5,
               }}
             >
@@ -85,68 +85,21 @@ function LandingPage() {
             Features That Make You Shine
           </Typography>
           <Grid container spacing={2}>
-            <Grid
-              size={{ xs: 12, md: 4 }}
-              bgcolor={blueGrey[50]}
-              p={3}
-              borderRadius={3}
-              sx={{
-                boxShadow: 1,
-                '&:hover': {
-                  boxShadow: 3,
-                },
-              }}
-            >
-              <Typography variant="h3" fontSize="1.125rem" gutterBottom>
-                Easy Editing
-              </Typography>
-              <Typography variant="p" color={blueGrey[600]}>
-                Update your resume sections with live preview and instant
-                formatting.
-              </Typography>
-            </Grid>
-            <Grid
-              size={{ xs: 12, md: 4 }}
-              bgcolor={blueGrey[50]}
-              borderRadius={3}
-              p={3}
-              sx={{
-                boxShadow: 1,
-                '&:hover': {
-                  boxShadow: 3,
-                },
-              }}
-            >
-              <Typography variant="h3" fontSize="1.125rem" gutterBottom>
-                Beautiful Templates
-              </Typography>
-              <Typography variant="p" color={blueGrey[600]}>
-                {' '}
-                Choose from modern professional templates that are east to
-                customize.
-              </Typography>
-            </Grid>
-            <Grid
-              size={{ xs: 12, md: 4 }}
-              bgcolor={blueGrey[50]}
-              p={3}
-              borderRadius={3}
-              sx={{
-                boxShadow: 1,
-                '&:hover': {
-                  boxShadow: 3,
-                },
-              }}
-            >
-              <Typography variant="h3" fontSize="1.125rem" gutterBottom>
-                One-Click Export
-              </Typography>
-              <Typography variant="p" color={blueGrey[600]}>
-                {' '}
-                Download your resume instantly as a high-quality PDF with one
-                click.
-              </Typography>
-            </Grid>
+            <FeatureCard
+              title="Easy Editing"
+              description="Update your resume sections with live preview and instant
+                formatting."
+            />
+            <FeatureCard
+              title="Beautiful Templates"
+              description="Choose from modern professional templates that are east to
+                customize."
+            />
+            <FeatureCard
+              title="One-Click Export"
+              description="Download your resume instantly as a high-quality PDF with one
+                click."
+            />
           </Grid>
         </Box>
 
@@ -166,6 +119,33 @@ function LandingPage() {
         />
       </Box>
     </Box>
+  );
+}
+
+function FeatureCard({ title, description }) {
+  return (
+    <Grid
+      size={{ xs: 12, md: 4 }}
+      bgcolor={deepPurple[50]}
+      p={3}
+      borderRadius={3}
+      sx={{
+        cursor: 'pointer',
+        transition: 'all',
+        transitionDuration: '0.2s',
+        '&:hover': {
+          scale: 1.01,
+          boxShadow: 8,
+        },
+      }}
+    >
+      <Typography variant="h3" fontSize="1.125rem" gutterBottom>
+        {title}
+      </Typography>
+      <Typography variant="p" color={blueGrey[600]}>
+        {description}
+      </Typography>
+    </Grid>
   );
 }
 

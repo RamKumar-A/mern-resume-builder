@@ -39,10 +39,11 @@ function MobileActions({
             size="small"
             sx={{
               textTransform: 'capitalize',
+              bgcolor: purple[100],
               color: purple[500],
             }}
             startIcon={<LuPalette style={{ fontSize: '1rem' }} />}
-            variant="outlined"
+            variant="contained"
           >
             <Typography variant="span">Change Theme</Typography>
           </Button>
@@ -56,10 +57,11 @@ function MobileActions({
             size="small"
             sx={{
               textTransform: 'capitalize',
+              bgcolor: purple[100],
               color: purple[500],
             }}
             startIcon={<LuTrash2 style={{ fontSize: '1rem' }} />}
-            variant="outlined"
+            variant="contained"
           >
             <Typography variant="span">Delete</Typography>
           </Button>
@@ -73,10 +75,11 @@ function MobileActions({
             size="small"
             sx={{
               textTransform: 'capitalize',
+              bgcolor: purple[100],
               color: purple[500],
             }}
             startIcon={<LuDownload style={{ fontSize: '1rem' }} />}
-            variant="outlined"
+            variant="contained"
           >
             <Typography variant="span"> Preview & Download</Typography>
           </Button>

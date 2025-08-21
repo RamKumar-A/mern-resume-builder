@@ -12,7 +12,7 @@ function AuthDialog({ isOpen, onClose }) {
       <DialogTitle>
         {currentPage === 'signup' && (
           <>
-            <Typography component="h3" fontSize={'1.25rem'} fontWeight={500}>
+            <Typography component="p" fontSize={'1.25rem'} fontWeight={500}>
               Create an Account
             </Typography>
             <Typography
@@ -27,7 +27,7 @@ function AuthDialog({ isOpen, onClose }) {
         )}
         {currentPage === 'login' && (
           <>
-            <Typography component="h3" fontSize="1.25rem" fontWeight={500}>
+            <Typography component="p" fontSize="1.25rem" fontWeight={500}>
               Welcome Back
             </Typography>
             <Typography
@@ -42,7 +42,9 @@ function AuthDialog({ isOpen, onClose }) {
         )}
       </DialogTitle>
       <Box sx={{ p: { xs: 0.5, sm: 2 } }}>
-        {currentPage === 'login' && <Login setCurrentPage={setCurrentPage} />}
+        {currentPage === 'login' && (
+          <Login setCurrentPage={setCurrentPage} onClose={onClose} />
+        )}
         {currentPage === 'signup' && <SignUp setCurrentPage={setCurrentPage} />}
       </Box>
     </Dialog>

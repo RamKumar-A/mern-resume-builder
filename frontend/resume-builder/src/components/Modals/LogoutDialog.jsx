@@ -8,13 +8,13 @@ import {
 } from '@mui/material';
 import { purple, red } from '@mui/material/colors';
 
-function DeleteDialog({ open, onClose, handler }) {
+function LogoutDialog({ open, onClose, handler }) {
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle fontWeight="700">Delete Resume</DialogTitle>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle fontWeight="700">Logout</DialogTitle>
       <DialogContent>
         <DialogContentText fontSize="1.1rem">
-          Are you sure want to delete this resume?
+          Are you sure want to logout?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -35,11 +35,11 @@ function DeleteDialog({ open, onClose, handler }) {
             bgcolor: red[600],
           }}
         >
-          Delete
+          Logout
         </Button>
       </DialogActions>
     </Dialog>
   );
 }
 
-export default DeleteDialog;
+export default LogoutDialog;

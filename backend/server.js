@@ -7,6 +7,7 @@ import path from 'path';
 import { connectDB } from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import resumeRoutes from './routes/resumeRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import { fileURLToPath } from 'url';
 
 const app = express();
@@ -16,7 +17,7 @@ const app = express();
 app.use(
   cors({
     origin: process.env.CLIENT_URL || '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
@@ -31,6 +32,7 @@ connectDB();
 
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
+app.use('/api/user', userRoutes);
 
 // Get __dirname equivalent in ES module
 const __filename = fileURLToPath(import.meta.url);

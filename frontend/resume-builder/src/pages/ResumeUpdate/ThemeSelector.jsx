@@ -64,11 +64,13 @@ function ThemeSelector({
         mt="0.5rem"
         mb="1.25rem"
         flexWrap="wrap"
+        rowGap="0.5rem"
       >
         <Tabs tabs={TAB_DATA} activeTab={tabValue} setActiveTab={setTabValue} />
 
         <Button
           sx={{
+            width: { xs: '100%', sm: 'fit-content' },
             color: '#6e11b0',
             bgcolor: '#9810fa21',
             textTransform: 'capitalize',

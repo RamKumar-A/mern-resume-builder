@@ -1,11 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import DashboardLayout from '../../components/layouts/DashboardLayout';
-import Modal from '../../components/Modal';
-import TitleInput from '../../components/Inputs/TitleInput';
-import { useReactToPrint } from 'react-to-print';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATH } from '../../utils/apiPaths';
 import {
   LuArrowLeft,
   LuArrowRight,
@@ -15,42 +8,42 @@ import {
   LuSave,
   LuTrash2,
 } from 'react-icons/lu';
-import StepProgress from '../../components/StepProgress';
-import ProfileInfoForm from './Forms/ProfileInfoForm';
-import ContactInfoForm from './Forms/ContactInfoForm';
-import WorkExperienceForm from './Forms/WorkExperienceForm';
-import EducationDetailsForm from './Forms/EducationDetailsForm';
-import SkillsInfoForm from './Forms/SkillsInfoForm';
-import ProjectsDetailForm from './Forms/ProjectsDetailForm';
-import CertificationForm from './Forms/CertificationForm';
-import AdditionalInfoForm from './Forms/AdditionalInfoForm';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
+import TitleInput from '../../components/Inputs/TitleInput';
+import DashboardLayout from '../../components/layouts/DashboardLayout';
+import Modal from '../../components/Modal';
 import RenderResume from '../../components/ResumeTemplates/RenderResume';
+import StepProgress from '../../components/StepProgress';
+import { API_PATH } from '../../utils/apiPaths';
+import axiosInstance from '../../utils/axiosInstance';
+import AdditionalInfoForm from './Forms/AdditionalInfoForm';
+import CertificationForm from './Forms/CertificationForm';
+import ContactInfoForm from './Forms/ContactInfoForm';
+import EducationDetailsForm from './Forms/EducationDetailsForm';
+import ProfileInfoForm from './Forms/ProfileInfoForm';
+import ProjectsDetailForm from './Forms/ProjectsDetailForm';
+import SkillsInfoForm from './Forms/SkillsInfoForm';
+import WorkExperienceForm from './Forms/WorkExperienceForm';
 
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Grid,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { amber, purple } from '@mui/material/colors';
 import { toast } from 'react-hot-toast';
+import MobileActions from '../../components/MobileActions';
+import DeleteDialog from '../../components/Modals/DeleteDialog';
 import {
   captureElementAsImage,
   dataURLtoFile,
   fixTailwindColors,
 } from '../../utils/helper';
 import ThemeSelector from './ThemeSelector';
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from '@mui/material';
-import { amber, purple } from '@mui/material/colors';
-import { HiEllipsisVertical } from 'react-icons/hi2';
-import MobileActions from '../../components/MobileActions';
-import DeleteDialog from '../../components/Modals/DeleteDialog';
 
 function EditResume() {
   const { resumeId } = useParams();
@@ -779,7 +772,12 @@ function EditResume() {
         onClose={() => setOpenThemeSelector(false)}
         title="Change Theme"
       >
-        <Box component="div" width="90vw" height="80vh">
+        <Box
+          component="div"
+          width="90vw"
+          height="80vh"
+          px={{ xs: '1rem', sm: '2rem' }}
+        >
           <ThemeSelector
             selectedTheme={resumeData?.template}
             setSelectedTheme={(value) => {

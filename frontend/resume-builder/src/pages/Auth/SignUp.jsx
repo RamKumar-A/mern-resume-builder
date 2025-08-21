@@ -8,7 +8,7 @@ import { API_PATH } from '../../utils/apiPaths';
 import { UserContext } from '../../context/UserContext';
 import uploadImage from '../../utils/uploadImage';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { grey, red } from '@mui/material/colors';
+import { grey, purple, red } from '@mui/material/colors';
 
 function SignUp({ setCurrentPage }) {
   const { updateUser } = useContext(UserContext);
@@ -72,26 +72,11 @@ function SignUp({ setCurrentPage }) {
   }
   return (
     <Box width="100%" p="0.25rem">
-      {/* <Box py="0.25rem" pb="0.5rem">
-        <Typography component="h3" fontSize={'1.25rem'} fontWeight={500}>
-          Create an Account
-        </Typography>
-        <Typography
-          component="p"
-          fontSize="0.75rem"
-          gutterBottom
-          color={grey[700]}
-        >
-          Join us today by entering your details below.
-        </Typography>
-      </Box> */}
-
       <Box component="form" onSubmit={handleSignUp}>
         <Box>
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
         </Box>
 
-        {/* <div className=""> */}
         <Input
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
@@ -117,7 +102,6 @@ function SignUp({ setCurrentPage }) {
           type="password"
           id="password"
         />
-        {/* </div> */}
         {error && (
           <Typography
             component="p"
@@ -131,7 +115,7 @@ function SignUp({ setCurrentPage }) {
 
         <Button
           variant="contained"
-          sx={{ bgcolor: '#000' }}
+          sx={{ bgcolor: purple[600] }}
           type="submit"
           fullWidth
         >
@@ -151,7 +135,7 @@ function SignUp({ setCurrentPage }) {
             <Typography
               fontSize="13px"
               component="span"
-              color="#932be7"
+              color={purple[500]}
               width="fit-content"
               textTransform="capitalize"
               sx={{

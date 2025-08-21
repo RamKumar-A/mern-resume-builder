@@ -1,19 +1,58 @@
 import { Link } from 'react-router-dom';
 import ProfileInfoCard from '../Cards/ProfileInfoCard';
-import { Box } from '@mui/material';
+import { Box, Button, Stack } from '@mui/material';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+import { purple } from '@mui/material/colors';
 
-function Navbar() {
+function Navbar({ setOpenAuthModal }) {
+  const { user } = useContext(UserContext);
+
   return (
-    <Box className="h-16 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] py-2.5 px-4 md:px-0 sticky top-0 z-30">
-      <div className="container mx-auto flex items-center justify-between gap-5">
-        <Link to="/dashboard">
-          <h2 className="text-lg md:text-xl font-medium text-black leading-5">
-            Resume Builder
-          </h2>
-        </Link>
+    <Stack
+      className=""
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      pt={3}
+      mb={2}
+    >
+      <Box
+        component={Link}
+        fontSize={{ sm: '1.25rem' }}
+        fontWeight="700"
+        to="/"
+      >
+        Resume Builder
+      </Box>
+      {user ? (
         <ProfileInfoCard />
-      </div>
-    </Box>
+      ) : (
+        <Button
+          variant="contained"
+          onClick={() => setOpenAuthModal(true)}
+          sx={{
+            boxShadow: 1,
+            bgcolor: purple[50],
+            color: purple[500],
+            transitionProperty:
+              'color background-color, border-color, outline-color, text-decoration-color, fill, stroke',
+            transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            transitionDuration: '150ms',
+            borderRadius: '0.5rem',
+            fontSize: '0.8rem',
+            textTransform: 'capitalize',
+            '&:hover': {
+              bgcolor: purple[500],
+              color: '#fff',
+            },
+          }}
+          size="small"
+        >
+          Login / Sign Up
+        </Button>
+      )}
+    </Stack>
   );
 }
 

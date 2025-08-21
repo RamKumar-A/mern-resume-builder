@@ -4,7 +4,7 @@ import Input from '../../components/Inputs/Input';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATH } from '../../utils/apiPaths';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { grey, red } from '@mui/material/colors';
+import { grey, purple, red } from '@mui/material/colors';
 
 function CreateResumeForm() {
   const [title, setTitle] = useState('');
@@ -85,7 +85,7 @@ function CreateResumeForm() {
           type="submit"
           variant="contained"
           sx={{
-            bgcolor: '#000',
+            bgcolor: purple[500],
             color: '#fff',
           }}
           fullWidth

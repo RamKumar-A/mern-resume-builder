@@ -6,9 +6,9 @@ import { UserContext } from '../../context/UserContext';
 import axiosInstance from '../../utils/axiosInstance';
 import { API_PATH } from '../../utils/apiPaths';
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { grey, red } from '@mui/material/colors';
+import { grey, purple, red } from '@mui/material/colors';
 
-function Login({ setCurrentPage }) {
+function Login({ setCurrentPage, onClose }) {
   const [email, setEmail] = useState('ram@example.com');
   const [password, setPassword] = useState('test1234');
   const [error, setError] = useState(null);
@@ -43,6 +43,7 @@ function Login({ setCurrentPage }) {
         localStorage.setItem('token', token);
         updateUser(response.data);
         navigate('/dashboard');
+        onClose();
       }
     } catch (err) {
       if (err.response && err.response.data.message) {
@@ -87,7 +88,7 @@ function Login({ setCurrentPage }) {
 
         <Button
           variant="contained"
-          sx={{ bgcolor: '#000' }}
+          sx={{ bgcolor: purple[600] }}
           type="submit"
           fullWidth
         >
@@ -106,7 +107,7 @@ function Login({ setCurrentPage }) {
             <Typography
               fontSize="13px"
               component="span"
-              color="#932be7"
+              color={purple[500]}
               width="fit-content"
               textTransform="capitalize"
               sx={{
