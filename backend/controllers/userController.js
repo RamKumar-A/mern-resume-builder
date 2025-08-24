@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import AppError from '../utils/appError.js';
 
-const filterObj = (obj, allowedFields) => {
+const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
